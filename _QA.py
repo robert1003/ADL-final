@@ -4,11 +4,11 @@ from tqdm import tqdm
 
 class QAExample:
 
-    def __init__(self, question_text, context_text, answer_text, answerable):
+    def __init__(self, question_text, context_text, answer_text):
         self.question_text = question_text
         self.context_text = context_text
         self.answer_text = answer_text
-        self.answerable = answerable
+        self.answerable = (answer_text != '')
 
     def __str__(self):
         return '( \
