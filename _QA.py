@@ -5,8 +5,9 @@ from tqdm import tqdm
 
 class QAExample:
 
-    def __init__(self, document_id, page_id, context_text, question_text, answer_text):
+    def __init__(self, document_id, index, page_id, context_text, question_text, answer_text):
         self.document_id = document_id
+        self.index = index
         self.page_id = page_id
         self.context_text = context_text
         self.question_text = question_text

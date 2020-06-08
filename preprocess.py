@@ -5,9 +5,11 @@ import re
 import sys
 from transformers import AutoTokenizer
 from tqdm import tqdm
+from _QA import QAExample
 
 class sentence:
     def __init__(self,inp,nan):
+        self.filename=inp['filename']
         self.page=inp['Page No']
         self.text=inp['Text'].replace(' ','')
         self.index=inp['Index']
@@ -51,6 +53,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
         for i in range(len(df)):
             nan=df.iloc[i].isna()
             inp=dict(df.iloc[i])
+            inp['filename']=fn
             try:
                 cur.append(sentence(inp,nan))
                 for j in cur[-1].tag:
@@ -109,9 +112,12 @@ def preprocess(dir,tokenizer,k=0,side=1):
                             except:
                                 print(tag,j,a[j].QAdict,file=sys.stderr)
                                 print(a[j].tag,a[j].value,a[j].QA,file=sys.stderr)
-                con_text=con_text[7:]
-                ans_text=ans_text[7:]
-                ret.append(QAExample(con_text,qa_text,ans_text))
+                con_text=con_text[5:]
+                ans_text=ans_text[5:]
+                doc_id=a[bnd[l][0]].filename[-18:-9]
+                sid=a[bnd[l][0]].index
+                pid=a[bnd[l][0]].page
+                ret.append(QAExample(doc_id,sid,pid,con_text,qa_text,ans_text))
                 if side==1:
                     l=r-k
                 else:
