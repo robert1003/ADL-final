@@ -1,22 +1,27 @@
 import torch
+import numpy as np
 from torch.utils.data import TensorDataset
 from tqdm import tqdm
 
 class QAExample:
 
-    def __init__(self, question_text, context_text, answer_text):
-        self.question_text = question_text
+    def __init__(self, document_id, page_id, context_text, question_text, answer_text):
+        self.document_id = document_id
+        self.page_id = page_id
         self.context_text = context_text
+        self.question_text = question_text
         self.answer_text = answer_text
         self.answerable = (answer_text != '')
 
     def __str__(self):
         return '( \
+                \n\t document_id: {} \
+                \n\t page_id: {} \
                 \n\t question_text: {} \
                 \n\t context_text: {} \
                 \n\t answer_text: {} \
                 \n\t answerable: {} \
-                \n)'.format(self.question_text, self.context_text, self.answer_text, self.answerable)
+                \n)'.format(self.document_id, self.page_id, self.question_text, self.context_text, self.answer_text, self.answerable)
 
 class QAFeature:
 
@@ -105,3 +110,6 @@ def QAExamples_to_QAFeatureDataset(examples, tokenizer, set_type):
         )
 
     return features, dataset
+
+
+

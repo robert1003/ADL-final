@@ -4,18 +4,18 @@ import unicodedata
 import re
 import sys
 from transformers import AutoTokenizer
-from _QA import *
+from tqdm import tqdm
 
 class sentence:
     def __init__(self,inp,nan):
         self.page=inp['Page No']
-        self.text=inp['Text']
+        self.text=inp['Text'].replace(' ','')
         self.index=inp['Index']
         self.par=0 if nan['Parent Index'] else inp['Parent Index']
         self.title=not nan['Is Title']
         self.table=not nan['Is Table']
-        self.tagstr=inp['Tag'] if 'Tag' in inp and not nan['Tag'] else ''
-        self.valuestr=inp['Value'] if 'Value' in inp and not nan['Value'] else ''
+        self.tagstr=inp['Tag'].replace(' ','') if 'Tag' in inp and not nan['Tag'] else ''
+        self.valuestr=inp['Value'].replace(' ','') if 'Value' in inp and not nan['Value'] else ''
         if self.valuestr=='':
             self.tagstr=''
         self.tagstr = unicodedata.normalize("NFKC", re.sub('＊|\*|\s+', '', self.tagstr))
@@ -27,8 +27,7 @@ class sentence:
                 if len(self.value)==1:
                     self.value=self.value*len(self.tag)
                 else:
-                    self.valuestr=self.valuestr.replace(';',' ')
-                    self.value=self.valuestr.split(';')
+                    self.value=[self.valuestr]
             except:
                 #print(inp,file=sys.stderr)
                 if len(self.tag)==2:
@@ -67,7 +66,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
         res.append(cur)
     print('Start creating dataset',file=sys.stderr)
     ret=[]
-    for tag in tags:
+    for tag in tqdm(tags):
         for a in res:
             bnd=[]
             toklen=[]
@@ -93,7 +92,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
             while l<n:
                 r=l
                 curlen=0
-                while r<n and curlen+toklen[r]<=512-15:
+                while r<n and curlen+toklen[r]<=512-16:
                     curlen+=toklen[r]
                     r+=1
                 qa_text=tag
@@ -110,8 +109,8 @@ def preprocess(dir,tokenizer,k=0,side=1):
                             except:
                                 print(tag,j,a[j].QAdict,file=sys.stderr)
                                 print(a[j].tag,a[j].value,a[j].QA,file=sys.stderr)
-                con_text=con_text[5:]
-                ans_text=ans_text[5:]
+                con_text=con_text[7:]
+                ans_text=ans_text[7:]
                 ret.append(QAExample(con_text,qa_text,ans_text))
                 if side==1:
                     l=r-k
@@ -124,4 +123,3 @@ def preprocess(dir,tokenizer,k=0,side=1):
 #preprocess(input_files,tokenizer,k,side)
 #side=0: current_window[l,r) => next_window[l+k,...)
 #side=1: current_window[l,r) => next_window[r-k,...)
-

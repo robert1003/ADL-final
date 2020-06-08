@@ -16,12 +16,12 @@ class Model(nn.Module):
             self.end = nn.Linear(hidden_size, 1)
 
     def forward(self, input_tensor, attention_tensor, segment_tensor):
-        out = self.model(input_tensor, attention_tensor, segment_tensor) # (batch_size, 512, 768)
+        out = self.model(input_tensor, attention_tensor, segment_tensor)[0] # (batch_size, 512, 768)
 
         if self.conv:
             out = out.permute(0, 2, 1)[:, :, self.question_length:] # (batch_size, 768, length)
             out_start = self.start(out).squeeze(1) # (batch_size, length)
-            out_end = selg.end(out).squeeze(1) # (batch_size, length)
+            out_end = self.end(out).squeeze(1) # (batch_size, length)
         else:
             out_start = self.start(out).squeeze(2) # (batch_size, length)
             out_end = self.end(out).squeeze(2) # (batch_size, length)
