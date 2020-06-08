@@ -4,6 +4,7 @@ import unicodedata
 import re
 import sys
 from transformers import AutoTokenizer
+from _QA import *
 
 class sentence:
     def __init__(self,inp,nan):
