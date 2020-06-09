@@ -74,3 +74,13 @@ def Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device,
                 },
                 model_file
             )
+
+    torch.save(
+        {
+            'state_dict': model.state_dict(),
+            'opt_dict': optimizer.state_dict(),
+            'best_loss': best_loss,
+            'iter': epochs
+        },
+        f'{epochs}_model_file'
+    )

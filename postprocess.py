@@ -49,11 +49,13 @@ def is_datatime(time):
 def post_process(
     raw_start_logits,
     raw_end_logits,
+    QAExamples,
     QAFeatures,
     offset=15,
     max_len=30,
-    null_threshold=0.5,
+    null_threshold=0.2,
     two_ans_threshold = 0.3,
+    k=5
     special_list = ['仕様書交付期限', '入札書締切日時', '質問箇所TEL/FAX'],
     era_name = ['平成', '令和', '昭和', '大正', '明治']
 ):  
@@ -64,9 +66,9 @@ def post_process(
         # apply softmax
         start_logit = torch.softmax(raw_start_logit, dim=0)
         end_logit = torch.softmax(raw_end_logit, dim=0)
-        start_scores, start_ids = torch.topk(start_logit, k=3)
-        end_scores, end_ids = torch.topk(end_logit, k=3)
-        QAexample = QAExamples_dev[QAfeature.example_id]
+        start_scores, start_ids = torch.topk(start_logit, k=k)
+        end_scores, end_ids = torch.topk(end_logit, k=k)
+        QAexample = QAExamples[QAfeature.example_id]
 
         # enumerate possibilities
         possible = []
@@ -75,6 +77,8 @@ def post_process(
                 if start_idx == 0 or end_idx == 0 or start_idx > end_idx or end_idx - start_idx > max_len:
                     continue
                 else:
+                    if 0 in QAfeature.input_ids[start_idx:end_idx + 1]:
+                        continue
                     possible.append((
                         start_score + end_score,
                         (start_idx, end_idx)
