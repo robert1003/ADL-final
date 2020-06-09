@@ -18,6 +18,7 @@ def Arg():
     arg_parser.add_argument('--cuda', default=0, type=int, help='cuda device number')
     arg_parser.add_argument('--model_name', type=str, required=True, help='model save name')
     arg_parser.add_argument('--log_name', type=str, required=True, help='log file name')
+    arg_parser.add_argument('--output_name', type=str, required=True, help='output file name')
     arg_parser.add_argument('--train_data', type=str, default='./release/train', help='train data folder')
     arg_parser.add_argument('--dev_data', type=str, default='./release/dev', help='dev data folder')
     arg_parser.add_argument('--pretrained_model', type=str, default='bert-base-multilingual-cased', help='name of pretrained model to use')
@@ -32,7 +33,7 @@ def main():
     args = Arg()
     use_cuda = torch.cuda.is_available()
     device = torch.device("cuda:%d" % args.cuda if use_cuda else "cpu")
-    print('device = {}'.format(device))
+    print('device = {}'.format(device), file = sys.stderr)
     BATCH_SIZE = 4
     
     # set up tokenizer
@@ -43,12 +44,12 @@ def main():
     dev_path = os.path.join(args.dev_data, 'ca_data/*')
     
     print('Load train data...', file=sys.stderr)
-    QAExamples_train = preprocess(train_path, tokenizer, 0, 1)
+    QAExamples_train, train_line = preprocess(train_path, tokenizer, 0, 1)
     QAFeatures_train, QAdataset_train = QAExamples_to_QAFeatureDataset(QAExamples_train, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
     print('Load dev data...', file=sys.stderr)
-    QAExamples_dev = preprocess(dev_path, tokenizer, 0, 1)
+    QAExamples_dev, dev_line = preprocess(dev_path, tokenizer, 0, 1)
     QAFeatures_dev, QAdataset_dev = QAExamples_to_QAFeatureDataset(QAExamples_dev, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
