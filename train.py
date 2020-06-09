@@ -1,7 +1,19 @@
-def Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, epochs = 500):
+import sys
+import logging
+import torch
+import time
+from _utils import timeSince
+
+def Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, model_file, log_file, epochs=10):
+    logging.basicConfig(
+        level=logging.INFO, 
+        format='%(message)s', 
+        handlers=[logging.FileHandler(log_file, 'w'), logging.StreamHandler(sys.stdout)]
+    )
     model = model.to(device)
 
     best_loss = 1e10
+    start = time.time()
     for epoch in range(epochs): 
         train_loss, step = 0, 0
         model.train()
@@ -47,16 +59,18 @@ def Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device,
                 print('Epoch {}/{} Iter {}/{} Cur_loss {:.5f}'.format(epoch + 1, epochs, step, len(dev_dataloader), cur_loss.item()), end='\r')
 
         dev_loss /= step
-        print('Epoch {}/{}: training loss = {:.5f}, dev loss = {:.5f}'.format(epoch, epochs, train_loss, dev_loss)) 
+        logging.info('Epoch {}/{}: training loss = {:.5f}, dev loss = {:.5f} Time Remaining: {}'.format(
+            epoch + 1, epochs, train_loss, dev_loss, timeSince(start, epoch + 1, epochs))) 
 
         if best_loss > dev_loss:
+            print('Update best loss: {:.5f} -> {:.5f}, saving model to {}'.format(best_loss, dev_loss, model_file))
             best_loss = dev_loss
-            checkpoint_path = f'model/model.{epoch + 1}.pt'
             torch.save(
                 {
                     'state_dict': model.state_dict(),
+                    'opt_dict': optimizer.state_dict(),
+                    'best_loss': best_loss,
                     'iter': epoch + 1
                 },
-                checkpoint_path
+                model_file
             )
-

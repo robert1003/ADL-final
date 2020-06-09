@@ -3,7 +3,6 @@ import pandas as pd
 import unicodedata
 import re
 import sys
-from transformers import AutoTokenizer
 from tqdm import tqdm
 from _QA import QAExample
 
