@@ -1,4 +1,5 @@
-
+import torch
+from tqdm import tqdm
 
 def get_index(QAExample, ans):
     ans_pos = QAExample.context_text.find(ans)
@@ -51,11 +52,12 @@ def post_process(
     raw_end_logits,
     QAExamples,
     QAFeatures,
+    tokenizer,
     offset=15,
     max_len=30,
     null_threshold=0.2,
     two_ans_threshold = 0.3,
-    k=5
+    k=5,
     special_list = ['仕様書交付期限', '入札書締切日時', '質問箇所TEL/FAX'],
     era_name = ['平成', '令和', '昭和', '大正', '明治']
 ):  

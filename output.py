@@ -10,7 +10,7 @@ def Output(output_list, line, output_file):
         mp[filename].append((question, answer))
 
     output = []
-    for (filename, num) in line.items():
+    for (filename, num) in line:
         #print(filename, num, file = sys.stderr)
         for i in range(1, num + 1):
             name = filename + '-' + str(i)
