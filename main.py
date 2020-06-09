@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 from transformers import AutoTokenizer, BertModel, AdamW
 from torch.utils.data import DataLoader
+from torch.utils.data.sampler import WeightedRandomSampler
 from tqdm import tqdm
 from model import Model
 from _QA import QAExamples_to_QAFeatureDataset
@@ -85,7 +86,14 @@ def main():
     
     # train model
     if args.train != None:
-        train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, shuffle=True)
+        answerable_cnt = sum([1 if feature.start_position != 0 else 0 for feature in QAFeatures_train])
+        answerable_weight = (len(QAFeatures_train) - answerable_cnt) / answerable_cnt
+        sampler = WeightedRandomSampler(
+                [answerable_weight if feature.start_position != 0 else 1 for feature in QAFeatures_train],
+                answerable_cnt * 2,
+                replacement=True
+        )
+        train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, sampler=sampler)
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
         pretrained_model = BertModel.from_pretrained(args.pretrained_model)
