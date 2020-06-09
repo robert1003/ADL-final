@@ -22,6 +22,9 @@ def Arg():
     arg_parser.add_argument('--dev_data', type=str, default='./release/dev', help='dev data folder')
     arg_parser.add_argument('--pretrained_model', type=str, default='bert-base-multilingual-cased', help='name of pretrained model to use')
     arg_parser.add_argument('--epochs', type=int, default=10, help='training epochs')
+    arg_parser.add_argument('--use_sampler', action='store_true', help='use sampler to solve imbalance problem')
+    arg_parser.add_argument('--ratio', type=float, help='use sampler to solve imbalance problem, \
+            sum(prob(answerable)) / sum(prob(unanswerable)) what you enter')
     args = arg_parser.parse_args()
     return args
 
@@ -86,14 +89,17 @@ def main():
     
     # train model
     if args.train != None:
-        answerable_cnt = sum([1 if feature.start_position != 0 else 0 for feature in QAFeatures_train])
-        answerable_weight = (len(QAFeatures_train) - answerable_cnt) / answerable_cnt
-        sampler = WeightedRandomSampler(
-                [answerable_weight if feature.start_position != 0 else 1 for feature in QAFeatures_train],
-                answerable_cnt * 2,
-                replacement=True
-        )
-        train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, sampler=sampler)
+        if args.use_sampler:
+            answerable_cnt = sum([1 if feature.start_position != 0 else 0 for feature in QAFeatures_train])
+            answerable_weight = (len(QAFeatures_train) - answerable_cnt) / answerable_cnt
+            sampler = WeightedRandomSampler(
+                    [answerable_weight * args.ratio if feature.start_position != 0 else 1 for feature in QAFeatures_train],
+                    answerable_cnt * 2,
+                    replacement=True
+            )
+            train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, sampler=sampler)
+        else:
+            train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, shuffle=True)
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
         pretrained_model = BertModel.from_pretrained(args.pretrained_model)
