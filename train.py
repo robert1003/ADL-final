@@ -79,4 +79,4 @@ def Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device,
         },
         f'{epochs}_{model_file}'
     )
-    logging.info('Best dev loss: {.5f}'.format(best_loss))
+    logging.info('Best dev loss: {:.5f}'.format(best_loss))
