@@ -1,0 +1,159 @@
+Namespace(cuda=1, dev_data='../release/dev', epochs=30, kernel_size=3, learning_rate=5e-06, log_name='conv2.log', model_name='conv2.pth', pretrained_model='bert-base-multilingual-cased', ratio=None, train='conv2', train_data='../release/train', use_sampler=False)
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "_num_labels": 2,
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bad_words_ids": null,
+  "bos_token_id": null,
+  "decoder_start_token_id": null,
+  "directionality": "bidi",
+  "do_sample": false,
+  "early_stopping": false,
+  "eos_token_id": null,
+  "finetuning_task": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "is_encoder_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-12,
+  "length_penalty": 1.0,
+  "max_length": 20,
+  "max_position_embeddings": 512,
+  "min_length": 0,
+  "model_type": "bert",
+  "no_repeat_ngram_size": 0,
+  "num_attention_heads": 12,
+  "num_beams": 1,
+  "num_hidden_layers": 12,
+  "num_return_sequences": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "prefix": null,
+  "pruned_heads": {},
+  "repetition_penalty": 1.0,
+  "task_specific_params": null,
+  "temperature": 1.0,
+  "top_k": 50,
+  "top_p": 1.0,
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "use_bfloat16": false,
+  "vocab_size": 119547
+}
+
+loading file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-vocab.txt from cache at /home/robert1003/.cache/torch/transformers/96435fa287fbf7e469185f1062386e05a075cadbf6838b74da22bf64b080bc32.99bcd55fc66f4f3360bc49ba472b940b8dcf223ea6a345deb969d607ca900729
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "_num_labels": 2,
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bad_words_ids": null,
+  "bos_token_id": null,
+  "decoder_start_token_id": null,
+  "directionality": "bidi",
+  "do_sample": false,
+  "early_stopping": false,
+  "eos_token_id": null,
+  "finetuning_task": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "is_encoder_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-12,
+  "length_penalty": 1.0,
+  "max_length": 20,
+  "max_position_embeddings": 512,
+  "min_length": 0,
+  "model_type": "bert",
+  "no_repeat_ngram_size": 0,
+  "num_attention_heads": 12,
+  "num_beams": 1,
+  "num_hidden_layers": 12,
+  "num_return_sequences": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "prefix": null,
+  "pruned_heads": {},
+  "repetition_penalty": 1.0,
+  "task_specific_params": null,
+  "temperature": 1.0,
+  "top_k": 50,
+  "top_p": 1.0,
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "use_bfloat16": false,
+  "vocab_size": 119547
+}
+
+loading weights file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-pytorch_model.bin from cache at /home/robert1003/.cache/torch/transformers/5b5b80054cd2c95a946a8e0ce0b93f56326dff9fbda6a6c3e02de3c91c918342.7131dcb754361639a7d5526985f880879c9bfd144b65a0bf50590bddb7de9059
+Epoch 1/30: training loss = 0.85378, dev loss = 0.40737 Time Remaining: 11m 46s (- 341m 22s)
+Epoch 2/30: training loss = 0.33735, dev loss = 0.30553 Time Remaining: 24m 7s (- 337m 48s)
+Epoch 3/30: training loss = 0.25446, dev loss = 0.27579 Time Remaining: 36m 14s (- 326m 12s)
+Epoch 4/30: training loss = 0.21508, dev loss = 0.25097 Time Remaining: 48m 22s (- 314m 25s)
+Epoch 5/30: training loss = 0.18855, dev loss = 0.23275 Time Remaining: 60m 33s (- 302m 46s)
+Epoch 6/30: training loss = 0.17064, dev loss = 0.23692 Time Remaining: 72m 42s (- 290m 50s)
+Epoch 7/30: training loss = 0.15890, dev loss = 0.24221 Time Remaining: 84m 27s (- 277m 29s)
+Epoch 8/30: training loss = 0.14844, dev loss = 0.24065 Time Remaining: 96m 13s (- 264m 38s)
+Epoch 9/30: training loss = 0.13987, dev loss = 0.24021 Time Remaining: 108m 0s (- 252m 0s)
+Epoch 10/30: training loss = 0.13485, dev loss = 0.26334 Time Remaining: 119m 48s (- 239m 36s)
+Epoch 11/30: training loss = 0.12780, dev loss = 0.23887 Time Remaining: 131m 25s (- 227m 1s)
+Epoch 12/30: training loss = 0.12187, dev loss = 0.23900 Time Remaining: 143m 8s (- 214m 42s)
+Epoch 13/30: training loss = 0.11643, dev loss = 0.24651 Time Remaining: 154m 51s (- 202m 29s)
+Epoch 14/30: training loss = 0.11341, dev loss = 0.25028 Time Remaining: 166m 33s (- 190m 21s)
+Epoch 15/30: training loss = 0.10961, dev loss = 0.29718 Time Remaining: 178m 21s (- 178m 21s)
+Epoch 16/30: training loss = 0.10901, dev loss = 0.26659 Time Remaining: 190m 6s (- 166m 20s)
+Epoch 17/30: training loss = 0.10810, dev loss = 0.26455 Time Remaining: 201m 51s (- 154m 21s)
+Epoch 18/30: training loss = 0.10490, dev loss = 0.27729 Time Remaining: 213m 37s (- 142m 24s)
+Epoch 19/30: training loss = 0.10115, dev loss = 0.29113 Time Remaining: 225m 25s (- 130m 30s)
+Epoch 20/30: training loss = 0.10119, dev loss = 0.27867 Time Remaining: 237m 17s (- 118m 38s)
+Epoch 21/30: training loss = 0.09831, dev loss = 0.29913 Time Remaining: 249m 9s (- 106m 47s)
+Epoch 22/30: training loss = 0.09675, dev loss = 0.28672 Time Remaining: 261m 2s (- 94m 55s)
+Epoch 23/30: training loss = 0.09704, dev loss = 0.26392 Time Remaining: 272m 56s (- 83m 4s)
+Epoch 24/30: training loss = 0.09491, dev loss = 0.28695 Time Remaining: 284m 50s (- 71m 12s)
+Epoch 25/30: training loss = 0.09534, dev loss = 0.29469 Time Remaining: 296m 43s (- 59m 20s)
+Epoch 26/30: training loss = 0.09029, dev loss = 0.31528 Time Remaining: 308m 36s (- 47m 28s)
+Epoch 27/30: training loss = 0.09560, dev loss = 0.29126 Time Remaining: 320m 27s (- 35m 36s)
+Epoch 28/30: training loss = 0.08969, dev loss = 0.32777 Time Remaining: 332m 16s (- 23m 44s)
+Epoch 29/30: training loss = 0.09114, dev loss = 0.28470 Time Remaining: 344m 6s (- 11m 51s)
+Epoch 30/30: training loss = 0.09261, dev loss = 0.31793 Time Remaining: 355m 49s (- 0m 0s)
