@@ -7,6 +7,7 @@ class Model(nn.Module):
         self.model = pretrained_model
         self.question_length = question_length
         self.conv = convolution
+        padding = (kernel_size - 1) // 2
 
         if self.conv:
             self.start = nn.Conv1d(hidden_size, 1, kernel_size = kernel_size, padding = padding)
