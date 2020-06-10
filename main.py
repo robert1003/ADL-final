@@ -3,6 +3,7 @@ import sys
 import argparse
 import torch
 import torch.nn as nn
+import logging
 from transformers import AutoTokenizer, BertModel, AdamW
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import WeightedRandomSampler
@@ -34,6 +35,13 @@ def main():
     device = torch.device("cuda:%d" % args.cuda if use_cuda else "cpu")
     print('device = {}'.format(device), file = sys.stderr)
     BATCH_SIZE = 4
+    # setup logging
+    logging.basicConfig(
+        level=logging.INFO, 
+        format='%(message)s', 
+        handlers=[logging.FileHandler(args.log_name, 'w'), logging.StreamHandler(sys.stdout)]
+    )
+    logging.info(args)
     
     # set up tokenizer
     tokenizer = AutoTokenizer.from_pretrained(args.pretrained_model)
@@ -107,7 +115,7 @@ def main():
 
         optimizer = AdamW(model.parameters(), lr=3e-5, eps=1e-8)
         criterion = nn.CrossEntropyLoss()
-        Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, args.model_name, args.log_name, epochs=args.epochs)
+        Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, args.model_name, epochs=args.epochs)
 
 if __name__ == '__main__':
     main()

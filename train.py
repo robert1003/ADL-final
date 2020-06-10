@@ -4,12 +4,7 @@ import torch
 import time
 from _utils import timeSince
 
-def Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, model_file, log_file, epochs=10):
-    logging.basicConfig(
-        level=logging.INFO, 
-        format='%(message)s', 
-        handlers=[logging.FileHandler(log_file, 'w'), logging.StreamHandler(sys.stdout)]
-    )
+def Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, model_file, epochs=10):
     model = model.to(device)
 
     best_loss = 1e10
