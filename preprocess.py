@@ -5,7 +5,7 @@ import re
 import sys
 from tqdm import tqdm
 from _QA import QAExample
-from transformers import AutoTokenizer, BertModel, AdamW
+#from transformers import AutoTokenizer, BertModel, AdamW
 
 class sentence:
     def __init__(self,inp,nan):
