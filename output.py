@@ -1,20 +1,19 @@
 import csv
 import sys
 
-def Output(output_list, line, output_file):
+def Output(output_list, index_list, output_file):
     mp = dict()
     for (filename, idx, question, answer) in output_list:
-        filename = filename + "-" + str(idx)
+        filename = filename + '-' + str(idx)
         if filename not in mp:
             mp[filename] = []
         mp[filename].append((question, answer))
 
     output = []
-    for (filename, num) in sorted(line.items(), key=lambda t: t[0]):
+    for (filename, indexes) in sorted(index_list.items(), key=lambda t: t[0]):
         pos = filename.find('.pdf')
-        filename = filename[pos - 9:pos]
-        #print(filename, num, file = sys.stderr)
-        for i in range(1, num + 1):
+        filename = filename[pos-9 : pos]
+        for i in indexes:
             name = filename + '-' + str(i)
             predictions = ''
             if name in mp:

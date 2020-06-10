@@ -45,16 +45,23 @@ def preprocess(dir,tokenizer,k=0,side=1):
     tags=['調達年度','都道府県','入札件名','施設名','需要場所(住所)','調達開始日','調達終了日','公告日','仕様書交付期限','質問票締切日時','資格申請締切日時','入札書締切日時',\
         '開札日時','質問箇所所属/担当者','質問箇所TEL/FAX','資格申請送付先','資格申請送付先部署/担当者名','入札書送付先','入札書送付先部署/担当者名','開札場所']
     res=[]
-    line = dict()
+    index_list = dict()
     for fn in glob.glob(dir):
         with open(fn,'r') as f:
             df=pd.read_excel(fn)
-        line[fn] = len(df)
         cur=[]
+
+        pos = fn.find('.pdf')
+        fn_tmp = fn[pos-9 : pos]
+        index_list[fn_tmp] = []
+
         for i in range(len(df)):
             nan=df.iloc[i].isna()
             inp=dict(df.iloc[i])
             inp['filename']=fn
+
+            index_list.append(inp['Index'])
+
             try:
                 cur.append(sentence(inp,nan))
                 for j in cur[-1].tag:
@@ -122,9 +129,10 @@ def preprocess(dir,tokenizer,k=0,side=1):
                 if side==1:
                     l=r-k
                 else:
-                    l=l+k
+                    l=l+k 
+
     print(len(ret),file=sys.stderr)
-    return ret, line
+    return ret, index_list 
 
 #preprocess('./train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,1)
 #preprocess(input_files,tokenizer,k,side)

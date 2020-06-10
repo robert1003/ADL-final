@@ -51,12 +51,12 @@ def main():
     dev_path = os.path.join(args.dev_data, 'ca_data/*')
     
     print('Load train data...', file=sys.stderr)
-    QAExamples_train, train_line = preprocess(train_path, tokenizer, 0, 1)
+    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, 0, 1)
     QAFeatures_train, QAdataset_train = QAExamples_to_QAFeatureDataset(QAExamples_train, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
     print('Load dev data...', file=sys.stderr)
-    QAExamples_dev, dev_line = preprocess(dev_path, tokenizer, 0, 1)
+    QAExamples_dev, dev_index_list = preprocess(dev_path, tokenizer, 0, 1)
     QAFeatures_dev, QAdataset_dev = QAExamples_to_QAFeatureDataset(QAExamples_dev, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
