@@ -110,10 +110,12 @@ def preprocess(dir,tokenizer,k=0,side=1):
                 qa_text=tag
                 con_text=''
                 ans_text=''
+                sid = []
                 for i in range(l,r):
                     flag=ans_text=='' and tag in a[bnd[i][0]].tag
                     #print(flag,bnd[i],a[bnd[i][0]].tag,file=sys.stderr)
                     for j in range(bnd[i][0],bnd[i][1]):
+                        sid.append(a[j].index)
                         con_text+='[SEP]'+a[j].text
                         if flag:
                             try:
@@ -124,7 +126,6 @@ def preprocess(dir,tokenizer,k=0,side=1):
                 con_text=con_text[5:]
                 ans_text=ans_text[5:]
                 doc_id=a[bnd[l][0]].filename[-18:-9]
-                sid=a[bnd[l][0]].index
                 pid=a[bnd[l][0]].page
                 ret.append(QAExample(doc_id,sid,pid,con_text,qa_text,ans_text))
                 if side==1:
@@ -133,7 +134,6 @@ def preprocess(dir,tokenizer,k=0,side=1):
                     l=l+k 
 
     print(len(ret),file=sys.stderr)
-    print(index_list, file=sys.stderr)
     return ret, index_list 
 
 #preprocess('release/train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,1)

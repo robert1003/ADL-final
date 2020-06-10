@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 def get_index(QAExample, ans):
     ans_pos = QAExample.context_text.find(ans)
-    base_idx, now_pos = QAExample.index, QAExample.context_text.find('[SEP]')
+    base_idx, now_pos = 0, QAExample.context_text.find('[SEP]')
     loop_cnt = 0
     while now_pos < ans_pos and now_pos != -1:
         loop_cnt += 1
@@ -14,7 +14,7 @@ def get_index(QAExample, ans):
     if loop_cnt > 100:
         raise Exception('infinite loop while getting index for {} with answer {}'.format(QAExample, ans))
         
-    return base_idx
+    return QAExample.index[base_idx]
 
 def is_datatime(time):
     # hr:mn or hr：mn

@@ -10,9 +10,7 @@ def Output(output_list, index_list, output_file):
         mp[filename].append((question, answer))
 
     output = []
-    for (filename, indexes) in sorted(index_list.items(), key=lambda t: t[0]):
-        pos = filename.find('.pdf')
-        filename = filename[pos-9 : pos]
+    for (filename, indexes) in sorted(index_list.items(), key=lambda t: int(t[0])):
         for i in indexes:
             name = filename + '-' + str(i)
             predictions = ''
