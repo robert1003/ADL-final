@@ -102,10 +102,16 @@ def post_process(
                         QAfeature.input_ids[idxs[0] + offset:idxs[1] + offset + 1], 
                         skip_special_tokens=True
                     ).replace(' ', '').replace('#', '')
+                    if ans1.find('[SEP]') != -1:
+                        print('truncating', ans1, file=sys.stderr)
+                        ans1 = ans1[:ans1.find('[SEP]')]
                     ans2 = tokenizer.decode(
                         QAfeature.input_ids[idxs[2] + offset:idxs[3] + offset + 1], 
                         skip_special_tokens=True
                     ).replace(' ', '').replace('#', '')
+                    if ans2.find('[SEP]') != -1:
+                        print('truncating', ans2, file=sys.stderr)
+                        ans1 = ans2[:ans2.find('[SEP]')]
                     idx1 = get_index(QAexample, ans1)
                     idx2 = get_index(QAexample, ans2)
                     
@@ -139,6 +145,9 @@ def post_process(
                 QAfeature.input_ids[start_pos + offset:end_pos + offset + 1], 
                 skip_special_tokens=True
             ).replace(' ', '').replace('#', '')
+        if ans.find('[SEP]') != -1:
+            print('truncating', ans, file=sys.stderr)
+            ans = ans[:ans.find('[SEP]')]
 
         # the highest prob 
         if ans != '':
