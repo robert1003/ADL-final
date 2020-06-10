@@ -23,6 +23,7 @@ def Arg():
     arg_parser.add_argument('--dev_data', type=str, default='./release/dev', help='dev data folder')
     arg_parser.add_argument('--pretrained_model', type=str, default='bert-base-multilingual-cased', help='name of pretrained model to use')
     arg_parser.add_argument('--epochs', type=int, default=10, help='training epochs')
+    arg_parser.add_argument('--learning_rate', type=float, default=3e-6, help='learning rate')
     arg_parser.add_argument('--use_sampler', action='store_true', help='use sampler to solve imbalance problem')
     arg_parser.add_argument('--ratio', type=float, help='use sampler to solve imbalance problem, \
             sum(prob(answerable)) / sum(prob(unanswerable)) what you enter')
@@ -114,7 +115,7 @@ def main():
         pretrained_model = BertModel.from_pretrained(args.pretrained_model)
         model = Model(pretrained_model, convolution=args.train, kernel_size=args.kernel_size)
 
-        optimizer = AdamW(model.parameters(), lr=3e-5, eps=1e-8)
+        optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)
         criterion = nn.CrossEntropyLoss()
         Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, args.model_name, epochs=args.epochs)
 
