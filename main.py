@@ -26,6 +26,7 @@ def Arg():
     arg_parser.add_argument('--use_sampler', action='store_true', help='use sampler to solve imbalance problem')
     arg_parser.add_argument('--ratio', type=float, help='use sampler to solve imbalance problem, \
             sum(prob(answerable)) / sum(prob(unanswerable)) what you enter')
+    arg_parser.add_argument('--kernel_size', type=int, default=3, help='kernel_size in conv model')
     args = arg_parser.parse_args()
     return args
 
@@ -102,7 +103,7 @@ def main():
             answerable_weight = (len(QAFeatures_train) - answerable_cnt) / answerable_cnt
             sampler = WeightedRandomSampler(
                     [answerable_weight * args.ratio if feature.start_position != 0 else 1 for feature in QAFeatures_train],
-                    answerable_cnt * 2,
+                    len(QAFeatures_train),
                     replacement=True
             )
             train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, sampler=sampler)
@@ -111,7 +112,7 @@ def main():
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
         pretrained_model = BertModel.from_pretrained(args.pretrained_model)
-        model = Model(pretrained_model, convolution=(args.train == 'conv'))
+        model = Model(pretrained_model, convolution=(args.train == 'conv'), kernel_size=args.kernel_size)
 
         optimizer = AdamW(model.parameters(), lr=3e-5, eps=1e-8)
         criterion = nn.CrossEntropyLoss()
