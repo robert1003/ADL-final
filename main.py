@@ -113,7 +113,7 @@ def main():
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
         pretrained_model = BertModel.from_pretrained(args.pretrained_model)
-        model = Model(pretrained_model, convolution=args.train, kernel_size=args.kernel_size)
+        model = Model(pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
 
         optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)
         criterion = nn.CrossEntropyLoss()
