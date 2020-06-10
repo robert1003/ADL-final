@@ -2,17 +2,28 @@ import torch
 import torch.nn as nn
 
 class Model(nn.Module):
-    def __init__(self, pretrained_model, hidden_size = 768, question_length = 15, convolution = True, kernel_size = 3, padding = 1):
+    def __init__(self, pretrained_model, model_type, hidden_size = 768, question_length = 15, kernel_size = 3, padding = 1):
         super(Model, self).__init__()
         self.model = pretrained_model
         self.question_length = question_length
-        self.conv = convolution
+        self.model_type = model_type
         padding = (kernel_size - 1) // 2
 
-        if self.conv:
+        if self.model_type == 'conv':
             self.start = nn.Conv1d(hidden_size, 1, kernel_size = kernel_size, padding = padding)
             self.end = nn.Conv1d(hidden_size, 1, kernel_size = kernel_size, padding = padding)
-        else:
+        elif self.model_type == 'conv2':
+            self.start = nn.Sequential(
+                    nn.Conv1d(hidden_size, hidden_size, kernel_size=kernel_size, padding=padding),
+                    nn.ReLU(),
+                    nn.Conv1d(hidden_size, 1, kernel_size=kernel_size, padding=padding)
+            )
+            self.end = nn.Sequential(
+                    nn.Conv1d(hidden_size, hidden_size, kernel_size=kernel_size, padding=padding),
+                    nn.ReLU(),
+                    nn.Conv1d(hidden_size, 1, kernel_size=kernel_size, padding=padding)
+            )
+        elif self.model_type == 'linear':
             self.start = nn.Linear(hidden_size, 1)
             self.end = nn.Linear(hidden_size, 1)
 
