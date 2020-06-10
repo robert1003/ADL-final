@@ -18,7 +18,6 @@ def Arg():
     arg_parser.add_argument('--cuda', default=0, type=int, help='cuda device number')
     arg_parser.add_argument('--model_name', type=str, required=True, help='model save name')
     arg_parser.add_argument('--log_name', type=str, required=True, help='log file name')
-    arg_parser.add_argument('--output_name', type=str, required=True, help='output file name')
     arg_parser.add_argument('--train_data', type=str, default='./release/train', help='train data folder')
     arg_parser.add_argument('--dev_data', type=str, default='./release/dev', help='dev data folder')
     arg_parser.add_argument('--pretrained_model', type=str, default='bert-base-multilingual-cased', help='name of pretrained model to use')

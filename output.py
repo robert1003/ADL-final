@@ -10,7 +10,9 @@ def Output(output_list, line, output_file):
         mp[filename].append((question, answer))
 
     output = []
-    for (filename, num) in line:
+    for (filename, num) in sorted(line.items(), key=lambda t: t[0]):
+        pos = filename.find('.pdf')
+        filename = filename[pos - 9:pos]
         #print(filename, num, file = sys.stderr)
         for i in range(1, num + 1):
             name = filename + '-' + str(i)
