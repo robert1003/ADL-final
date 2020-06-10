@@ -5,7 +5,7 @@ import re
 import sys
 from tqdm import tqdm
 from _QA import QAExample
-from transformers import AutoTokenizer, BertModel, AdamW
+#from transformers import AutoTokenizer, BertModel, AdamW
 
 class sentence:
     def __init__(self,inp,nan):
@@ -133,7 +133,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
                     l=l+k 
 
     print(len(ret),file=sys.stderr)
-    print(index_list, file=sys.stderr)
+    #print(index_list, file=sys.stderr)
     return ret, index_list 
 
 #preprocess('release/train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,1)
