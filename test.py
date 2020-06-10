@@ -22,6 +22,7 @@ def Arg():
     arg_parser.add_argument('--checkpoint', type=str, required=True, help='model checkpoint')
     arg_parser.add_argument('--batch_size', type=int, default=32)
     arg_parser.add_argument('--output_file', type=str, default='prediction.csv')
+    arg_parser.add_argument('--kernel_size', type=int, default=3)
     args = arg_parser.parse_args()
     return args
 
@@ -44,7 +45,7 @@ def main():
     
     # load pretrained model
     pretrained_model = BertModel.from_pretrained(args.pretrained_model)
-    model = Model(pretrained_model, convolution=(args.train == 'conv'))
+    model = Model(pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
     checkpoint = torch.load(args.checkpoint, map_location=device)
     model.load_state_dict(checkpoint['state_dict'])
 
