@@ -5,6 +5,7 @@ import re
 import sys
 from tqdm import tqdm
 from _QA import QAExample
+from transformers import AutoTokenizer, BertModel, AdamW
 
 class sentence:
     def __init__(self,inp,nan):
@@ -60,7 +61,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
             inp=dict(df.iloc[i])
             inp['filename']=fn
 
-            index_list.append(inp['Index'])
+            index_list[fn_tmp].append(inp['Index'])
 
             try:
                 cur.append(sentence(inp,nan))
@@ -132,9 +133,10 @@ def preprocess(dir,tokenizer,k=0,side=1):
                     l=l+k 
 
     print(len(ret),file=sys.stderr)
+    print(index_list, file=sys.stderr)
     return ret, index_list 
 
-#preprocess('./train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,1)
+#preprocess('release/train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,1)
 #preprocess(input_files,tokenizer,k,side)
 #side=0: current_window[l,r) => next_window[l+k,...)
 #side=1: current_window[l,r) => next_window[r-k,...)
