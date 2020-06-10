@@ -30,7 +30,7 @@ class Model(nn.Module):
     def forward(self, input_tensor, attention_tensor, segment_tensor):
         out = self.model(input_tensor, attention_tensor, segment_tensor)[0] # (batch_size, 512, 768)
 
-        if self.conv:
+        if self.model_type in ['conv', 'conv2']:
             out = out.permute(0, 2, 1)[:, :, self.question_length:] # (batch_size, 768, length)
             out_start = self.start(out).squeeze(1) # (batch_size, length)
             out_end = self.end(out).squeeze(1) # (batch_size, length)
