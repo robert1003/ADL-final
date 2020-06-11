@@ -87,7 +87,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
             i,j=0,0
             while i<n:
                 if tag not in a[i].tag:
-                    curlen=len(tokenizer.tokenize(a[i].text))+1
+                    curlen=len(tokenizer.tokenize(a[i].text+sep_token))
                     bnd.append((i,i+1))
                     toklen.append(curlen)
                     i+=1
@@ -95,7 +95,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
                     curlen=0
                     j=i
                     while j<n and tag in a[j].tag:
-                        curlen+=len(tokenizer.tokenize(a[j].text))+1
+                        curlen+=len(tokenizer.tokenize(a[j].text+sep_token))+1
                         j+=1
                     bnd.append((i,j))
                     toklen.append(curlen)
