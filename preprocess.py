@@ -45,6 +45,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
     print('Start reading and parsing csv',file=sys.stderr)
     tags=['調達年度','都道府県','入札件名','施設名','需要場所(住所)','調達開始日','調達終了日','公告日','仕様書交付期限','質問票締切日時','資格申請締切日時','入札書締切日時',\
         '開札日時','質問箇所所属/担当者','質問箇所TEL/FAX','資格申請送付先','資格申請送付先部署/担当者名','入札書送付先','入札書送付先部署/担当者名','開札場所']
+    sep_token='[SEP]'
     res=[]
     index_list = dict()
     for fn in glob.glob(dir):
@@ -116,15 +117,15 @@ def preprocess(dir,tokenizer,k=0,side=1):
                     #print(flag,bnd[i],a[bnd[i][0]].tag,file=sys.stderr)
                     for j in range(bnd[i][0],bnd[i][1]):
                         sid.append(a[j].index)
-                        con_text+='[SEP]'+a[j].text
+                        con_text+=sep_token+a[j].text
                         if flag:
                             try:
-                                ans_text+='[SEP]'+a[j].QAdict[tag]
+                                ans_text+=sep_token+a[j].QAdict[tag]
                             except:
                                 print(tag,j,a[j].QAdict,file=sys.stderr)
                                 print(a[j].tag,a[j].value,a[j].QA,file=sys.stderr)
-                con_text=con_text[5:]
-                ans_text=ans_text[5:]
+                con_text=con_text[len(sep_token):]
+                ans_text=ans_text[len(sep_token):]
                 doc_id=a[bnd[l][0]].filename[-18:-9]
                 pid=a[bnd[l][0]].page
                 ret.append(QAExample(doc_id,sid,pid,con_text,qa_text,ans_text))
