@@ -19,14 +19,16 @@ def Arg():
     arg_parser.add_argument('--cuda', default=0, type=int, help='cuda device number')
     arg_parser.add_argument('--model_name', type=str, required=True, help='model save name')
     arg_parser.add_argument('--log_name', type=str, required=True, help='log file name')
-    arg_parser.add_argument('--train_data', type=str, default='./release/train', help='train data folder')
-    arg_parser.add_argument('--dev_data', type=str, default='./release/dev', help='dev data folder')
+    arg_parser.add_argument('--train_data', type=str, default='../release/train', help='train data folder')
+    arg_parser.add_argument('--dev_data', type=str, default='../release/dev', help='dev data folder')
+    arg_parser.add_argument('--dev_ref_file', type=str, default='../release/dev/dev_ref.csv', help='dev ref file path')
     arg_parser.add_argument('--pretrained_model', type=str, default='bert-base-multilingual-cased', help='name of pretrained model to use')
     arg_parser.add_argument('--epochs', type=int, default=10, help='training epochs')
-    arg_parser.add_argument('--learning_rate', type=float, default=3e-6, help='learning rate')
+    arg_parser.add_argument('--learning_rate', type=float, default=5e-6, help='learning rate')
     arg_parser.add_argument('--use_sampler', action='store_true', help='use sampler to solve imbalance problem')
     arg_parser.add_argument('--ratio', type=float, help='use sampler to solve imbalance problem, \
-            sum(prob(answerable)) / sum(prob(unanswerable)) what you enter')
+            prob(answerable) / prob(unanswerable) what you enter')
+    arg_parser.add_argument('--round', type=int, default=1000, help='iter of each epoch using sampler')
     arg_parser.add_argument('--kernel_size', type=int, default=3, help='kernel_size in conv model')
     args = arg_parser.parse_args()
     return args
@@ -100,11 +102,9 @@ def main():
     # train model
     if args.train != None:
         if args.use_sampler:
-            answerable_cnt = sum([1 if feature.start_position != 0 else 0 for feature in QAFeatures_train])
-            answerable_weight = (len(QAFeatures_train) - answerable_cnt) / answerable_cnt
             sampler = WeightedRandomSampler(
-                    [answerable_weight * args.ratio if feature.start_position != 0 else 1 for feature in QAFeatures_train],
-                    len(QAFeatures_train),
+                    [args.ratio if feature.start_position != 0 else 1 for feature in QAFeatures_train],
+                    args.round * BATCH_SIZE,
                     replacement=True
             )
             train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, sampler=sampler)
@@ -117,7 +117,7 @@ def main():
 
         optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)
         criterion = nn.CrossEntropyLoss()
-        Train(model, train_dataloader, dev_dataloader, criterion, optimizer, device, args.model_name, epochs=args.epochs)
+        Train(model, train_dataloader, dev_dataloader, dev_index_list, QAExamples_dev, QAFeatures_dev, tokenizer, criterion, optimizer, device, args.model_name, args.dev_ref_file, epochs=args.epochs)
 
 if __name__ == '__main__':
     main()
