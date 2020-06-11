@@ -30,6 +30,7 @@ def Arg():
             prob(answerable) / prob(unanswerable) what you enter')
     arg_parser.add_argument('--round', type=int, default=1000, help='iter of each epoch using sampler')
     arg_parser.add_argument('--kernel_size', type=int, default=3, help='kernel_size in conv model')
+    arg_parser.add_argument('--overlap_k', type=int, default=0, help='overlap in preprocess')
     args = arg_parser.parse_args()
     return args
 
@@ -55,7 +56,7 @@ def main():
     dev_path = os.path.join(args.dev_data, 'ca_data/*')
     
     print('Load train data...', file=sys.stderr)
-    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, 0, 1)
+    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, args.overlap_k, 1)
     QAFeatures_train, QAdataset_train = QAExamples_to_QAFeatureDataset(QAExamples_train, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
