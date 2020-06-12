@@ -15,3 +15,4 @@ Train with `--learning_rate=3e-5 --epochs=20 --ratio=? --use_sampler --round=260
 | conv_from_hw2_9 | bert=hw2(trained 10 epochs) ks=7 | conv_hw2_dev.csv: 0.9314398271699075, **conv_hw2_test.csv(pub): 0.93523** | loss decreases faster(dev_loss 0.21~ in 1200 steps |
 | conv2_robert_3 | Conv1d: 768-786-1, relu | conv2_dev.csv: 0.9210700216037618, 30_conv2_dev.csv: 0.9288727919684839 | deeper conv layer didn't improve, and pocket with CE loss is not good |
 | conv2_robert_13 | Conv1d: 786-30-1, relu | conv2_dev.csv: 0.9312401285333047 | |
+| conv_distilbert_robert_15 | bert=distilbert-base-multilingual-cased | conv_dis_dev.csv: 0.9303977633752702 | | 
