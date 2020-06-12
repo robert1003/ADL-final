@@ -6,6 +6,7 @@
 | conv_robert_11 | kernel_size=9 | conv_dev.csv: 0.9294573643410853 | |
 | conv_robert_12 | kernel_size=11 | conv_dev.csv: 0.9289236243487101 | kernel=7 seems good |
 | conv2_robert_3 | stack two Conv1d layer | conv2_dev.csv: 0.9210700216037618, 30_conv2_dev.csv: 0.9288727919684839 | deeper conv layer didn't improve, and pocket with CE loss is not good |
-| conv_sampler_robert_7 | ratio=1.0 round=2000 | conv_sampler_dev.csv: 0.929838607192782 |  |
+| conv_sampler_robert_7 | ratio=1.0 round=2000 | conv_sampler_dev.csv: 0.929838607192782 | |
+| conv_sampler_robert_8 | ratio=2.0 round=2000 | conv_sampler_dev.csv: 0.9331681280975983 | |
 | conv_sampler_robert_5 | ratio=3.0 round=2000 | conv_sampler_dev.csv: 0.9312364976490027 | |
 | conv_sampler_robert_4 | ratio=5.0 round=2000 | conv_sampler_dev.csv: 0.9320116914474523 | |
