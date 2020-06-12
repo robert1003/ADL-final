@@ -31,6 +31,7 @@ def Arg():
     arg_parser.add_argument('--round', type=int, default=1000, help='iter of each epoch using sampler')
     arg_parser.add_argument('--kernel_size', type=int, default=3, help='kernel_size in conv model')
     arg_parser.add_argument('--overlap_k', type=int, default=0, help='overlap in preprocess')
+    arg_parser.add_argument('--batch_size', type=int, default=4)
     args = arg_parser.parse_args()
     return args
 
@@ -39,7 +40,7 @@ def main():
     use_cuda = torch.cuda.is_available()
     device = torch.device("cuda:%d" % args.cuda if use_cuda else "cpu")
     print('device = {}'.format(device), file = sys.stderr)
-    BATCH_SIZE = 4
+    BATCH_SIZE = args.batch_size
     # setup logging
     logging.basicConfig(
         level=logging.INFO, 
