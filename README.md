@@ -16,3 +16,5 @@ Train with `--learning_rate=3e-5 --epochs=20 --ratio=? --use_sampler --round=260
 | conv2_robert_3 | Conv1d: 768-786-1, relu | conv2_dev.csv: 0.9210700216037618, 30_conv2_dev.csv: 0.9288727919684839 | deeper conv layer didn't improve, and pocket with CE loss is not good |
 | conv2_robert_13 | Conv1d: 786-30-1, relu | conv2_dev.csv: 0.9312401285333047 | |
 | conv_distilbert_robert_15 | bert=distilbert-base-multilingual-cased | conv_dis_dev.csv: 0.9303977633752702 | | 
+| conv_ltf0501 | kernel_size=7, ratio=3.0 | dev f1: 0.92911 | transfer learning from hw2 |
+| conv_deep_ltf0501 | kernel_size=7, ratio=3.0, | dev f1: 0.92379 | transfer learning from hw2, CNN: 256 -> 64 -> 1 | 
