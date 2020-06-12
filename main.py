@@ -4,7 +4,7 @@ import argparse
 import torch
 import torch.nn as nn
 import logging
-from transformers import AutoTokenizer, BertModel, AdamW
+from transformers import AutoTokenizer, AutoModel, AdamW
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import WeightedRandomSampler
 from tqdm import tqdm
@@ -78,7 +78,7 @@ def main():
             train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, shuffle=True)
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
-        pretrained_model = BertModel.from_pretrained(args.pretrained_model)
+        pretrained_model = AutoModel.from_pretrained(args.pretrained_model)
         model = Model(pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
 
         optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)
