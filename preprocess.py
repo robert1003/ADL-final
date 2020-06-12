@@ -41,7 +41,7 @@ class sentence:
         self.QA=list(zip(self.tag,self.value))
         self.QAdict=dict(self.QA)
         #print(vars(self),file=sys.stderr)
-def preprocess(dir,tokenizer,merge_type=0,one_ans=0,k=0,side=1):
+def preprocess(dir,tokenizer,k=0,side=1,merge_type=0,one_ans=0):
     print('Start reading and parsing csv',file=sys.stderr)
     tags=['調達年度','都道府県','入札件名','施設名','需要場所(住所)','調達開始日','調達終了日','公告日','仕様書交付期限','質問票締切日時','資格申請締切日時','入札書締切日時',\
         '開札日時','質問箇所所属/担当者','質問箇所TEL/FAX','資格申請送付先','資格申請送付先部署/担当者名','入札書送付先','入札書送付先部署/担当者名','開札場所']
