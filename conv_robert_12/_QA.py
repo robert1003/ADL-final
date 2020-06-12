@@ -80,10 +80,7 @@ def QAExample_to_QAFeature(idx, QAExample, tokenizer, set_type, max_length=512, 
     attention_mask = np.array(dic['attention_mask'])
     attention_mask[np.array(input_ids) == 0] = 0
     attention_mask = list(attention_mask)
-    try:
-        token_type_ids = dic['token_type_ids']
-    except:
-        token_type_ids = [0] * len(input_ids)
+    token_type_ids = dic['token_type_ids']
 
     if set_type == 'train':
         if QAExample.answerable:

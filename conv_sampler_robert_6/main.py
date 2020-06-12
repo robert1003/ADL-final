@@ -4,7 +4,7 @@ import argparse
 import torch
 import torch.nn as nn
 import logging
-from transformers import AutoTokenizer, AutoModel, AdamW
+from transformers import AutoTokenizer, BertModel, AdamW
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import WeightedRandomSampler
 from tqdm import tqdm
@@ -30,7 +30,6 @@ def Arg():
             prob(answerable) / prob(unanswerable) what you enter')
     arg_parser.add_argument('--round', type=int, default=1000, help='iter of each epoch using sampler')
     arg_parser.add_argument('--kernel_size', type=int, default=3, help='kernel_size in conv model')
-    arg_parser.add_argument('--overlap_k', type=int, default=0, help='overlap in preprocess')
     args = arg_parser.parse_args()
     return args
 
@@ -56,13 +55,48 @@ def main():
     dev_path = os.path.join(args.dev_data, 'ca_data/*')
     
     print('Load train data...', file=sys.stderr)
-    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, args.overlap_k, 1)
+    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, 0, 1)
     QAFeatures_train, QAdataset_train = QAExamples_to_QAFeatureDataset(QAExamples_train, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
     print('Load dev data...', file=sys.stderr)
     QAExamples_dev, dev_index_list = preprocess(dev_path, tokenizer, 0, 1)
     QAFeatures_dev, QAdataset_dev = QAExamples_to_QAFeatureDataset(QAExamples_dev, tokenizer, 'train')
+    print('DONE', file=sys.stderr)
+    
+    # data checking
+    print('Checking data...', file=sys.stderr)
+    for fea in tqdm(QAFeatures_train):
+        data = QAExamples_train[fea.example_id]
+        s = tokenizer.decode(fea.input_ids[fea.start_position + 15:fea.end_position + 15 + 1], skip_special_tokens=False).replace(' ', '').replace('#', '')
+        try:
+            assert data.answer_text.find(s) != -1 or (s == '[SEP]' and not data.answerable)
+        except:
+            if s.find('[UNK]') == -1:
+                print(fea.tokens[fea.start_position:fea.end_position + 1], file=sys.stderr)
+                print(s, file=sys.stderr)
+                print(len(data.answer_text), file=sys.stderr)
+                print(data, file=sys.stderr)
+                print('\n\n', file=sys.stderr)
+
+        if fea.start_position >= 497 or fea.end_position >= 497:
+            print('fffffffff', fea.tokens[fea.start_position + 15:fea.end_position + 15 + 1], sys.stderr)
+        
+    for fea in tqdm(QAFeatures_dev):
+        data = QAExamples_dev[fea.example_id]
+        s = tokenizer.decode(fea.input_ids[fea.start_position + 15:fea.end_position + 15 + 1], skip_special_tokens=False).replace(' ', '').replace('#', '')
+        try:
+            assert data.answer_text.find(s) != -1 or (s == '[SEP]' and not data.answerable)
+        except:
+            if s.find('[UNK]') == -1:
+                print(fea.tokens[fea.start_position:fea.end_position + 1], file=sys.stderr)
+                print(s, file=sys.stderr)
+                print(len(data.answer_text), file=sys.stderr)
+                print(data, file=sys.stderr)
+                print('\n\n', file=sys.stderr)
+
+        if fea.start_position >= 497 or fea.end_position >= 497:
+            print('fffffffff', fea.tokens[fea.start_position + 15:fea.end_position + 15 + 1], file=sys.stderr)
     print('DONE', file=sys.stderr)
     
     # train model
@@ -78,7 +112,7 @@ def main():
             train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, shuffle=True)
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
-        pretrained_model = AutoModel.from_pretrained(args.pretrained_model)
+        pretrained_model = BertModel.from_pretrained(args.pretrained_model)
         model = Model(pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
 
         optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)

@@ -4,7 +4,7 @@ import argparse
 import glob
 import torch
 import torch.nn as nn
-from transformers import AutoTokenizer, AutoModel, AdamW
+from transformers import AutoTokenizer, BertModel, AdamW
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from model import Model
@@ -44,7 +44,7 @@ def main():
     print('DONE', file=sys.stderr)
     
     # load pretrained model
-    pretrained_model = AutoModel.from_pretrained(args.pretrained_model)
+    pretrained_model = BertModel.from_pretrained(args.pretrained_model)
     model = Model(pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
     checkpoint = torch.load(args.checkpoint, map_location=device)
     model.load_state_dict(checkpoint['state_dict'])

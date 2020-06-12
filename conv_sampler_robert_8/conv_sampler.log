@@ -1,0 +1,236 @@
+Namespace(cuda=1, dev_data='../release/dev', dev_ref_file='../release/dev/dev_ref.csv', epochs=100, kernel_size=7, learning_rate=5e-06, log_name='conv_sampler.log', model_name='conv_sampler.pth', pretrained_model='bert-base-multilingual-cased', ratio=2.0, round=2000, train='conv', train_data='../release/train', use_sampler=True)
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "_num_labels": 2,
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bad_words_ids": null,
+  "bos_token_id": null,
+  "decoder_start_token_id": null,
+  "directionality": "bidi",
+  "do_sample": false,
+  "early_stopping": false,
+  "eos_token_id": null,
+  "finetuning_task": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "is_encoder_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-12,
+  "length_penalty": 1.0,
+  "max_length": 20,
+  "max_position_embeddings": 512,
+  "min_length": 0,
+  "model_type": "bert",
+  "no_repeat_ngram_size": 0,
+  "num_attention_heads": 12,
+  "num_beams": 1,
+  "num_hidden_layers": 12,
+  "num_return_sequences": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "prefix": null,
+  "pruned_heads": {},
+  "repetition_penalty": 1.0,
+  "task_specific_params": null,
+  "temperature": 1.0,
+  "top_k": 50,
+  "top_p": 1.0,
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "use_bfloat16": false,
+  "vocab_size": 119547
+}
+
+loading file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-vocab.txt from cache at /home/robert1003/.cache/torch/transformers/96435fa287fbf7e469185f1062386e05a075cadbf6838b74da22bf64b080bc32.99bcd55fc66f4f3360bc49ba472b940b8dcf223ea6a345deb969d607ca900729
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "_num_labels": 2,
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bad_words_ids": null,
+  "bos_token_id": null,
+  "decoder_start_token_id": null,
+  "directionality": "bidi",
+  "do_sample": false,
+  "early_stopping": false,
+  "eos_token_id": null,
+  "finetuning_task": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "is_encoder_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-12,
+  "length_penalty": 1.0,
+  "max_length": 20,
+  "max_position_embeddings": 512,
+  "min_length": 0,
+  "model_type": "bert",
+  "no_repeat_ngram_size": 0,
+  "num_attention_heads": 12,
+  "num_beams": 1,
+  "num_hidden_layers": 12,
+  "num_return_sequences": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "prefix": null,
+  "pruned_heads": {},
+  "repetition_penalty": 1.0,
+  "task_specific_params": null,
+  "temperature": 1.0,
+  "top_k": 50,
+  "top_p": 1.0,
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "use_bfloat16": false,
+  "vocab_size": 119547
+}
+
+loading weights file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-pytorch_model.bin from cache at /home/robert1003/.cache/torch/transformers/5b5b80054cd2c95a946a8e0ce0b93f56326dff9fbda6a6c3e02de3c91c918342.7131dcb754361639a7d5526985f880879c9bfd144b65a0bf50590bddb7de9059
+Epoch 1/100: training loss = 1.10494, dev loss = 0.38728, dev f1 score = 0.90175, Time 12m 59s (- 1286m 33s)
+Update best f1: 0.00000 -> 0.90175, saving model to conv_sampler.pth
+Epoch 2/100: training loss = 0.43475, dev loss = 0.32195, dev f1 score = 0.92524, Time 26m 5s (- 1278m 5s)
+Update best f1: 0.90175 -> 0.92524, saving model to conv_sampler.pth
+Epoch 3/100: training loss = 0.33570, dev loss = 0.27998, dev f1 score = 0.92071, Time 39m 21s (- 1272m 26s)
+Epoch 4/100: training loss = 0.30549, dev loss = 0.26274, dev f1 score = 0.92511, Time 52m 26s (- 1258m 27s)
+Epoch 5/100: training loss = 0.25908, dev loss = 0.24689, dev f1 score = 0.91864, Time 65m 31s (- 1244m 58s)
+Epoch 6/100: training loss = 0.23837, dev loss = 0.24851, dev f1 score = 0.92211, Time 78m 37s (- 1231m 49s)
+Epoch 7/100: training loss = 0.22778, dev loss = 0.23097, dev f1 score = 0.92455, Time 91m 44s (- 1218m 48s)
+Epoch 8/100: training loss = 0.21620, dev loss = 0.24462, dev f1 score = 0.92718, Time 104m 50s (- 1205m 38s)
+Update best f1: 0.92524 -> 0.92718, saving model to conv_sampler.pth
+Epoch 9/100: training loss = 0.20858, dev loss = 0.24925, dev f1 score = 0.92307, Time 118m 10s (- 1194m 50s)
+Epoch 10/100: training loss = 0.18877, dev loss = 0.27842, dev f1 score = 0.92160, Time 131m 15s (- 1181m 22s)
+Epoch 11/100: training loss = 0.19934, dev loss = 0.24571, dev f1 score = 0.91853, Time 144m 21s (- 1167m 56s)
+Epoch 12/100: training loss = 0.17949, dev loss = 0.27761, dev f1 score = 0.92577, Time 157m 27s (- 1154m 44s)
+Epoch 13/100: training loss = 0.18035, dev loss = 0.26709, dev f1 score = 0.92364, Time 170m 34s (- 1141m 31s)
+Epoch 14/100: training loss = 0.17773, dev loss = 0.26343, dev f1 score = 0.92484, Time 183m 40s (- 1128m 17s)
+Epoch 15/100: training loss = 0.17654, dev loss = 0.25936, dev f1 score = 0.92418, Time 196m 46s (- 1115m 2s)
+Epoch 16/100: training loss = 0.17866, dev loss = 0.30117, dev f1 score = 0.92190, Time 209m 51s (- 1101m 45s)
+Epoch 17/100: training loss = 0.16935, dev loss = 0.26112, dev f1 score = 0.92192, Time 222m 57s (- 1088m 32s)
+Epoch 18/100: training loss = 0.17334, dev loss = 0.27307, dev f1 score = 0.92230, Time 236m 3s (- 1075m 20s)
+Epoch 19/100: training loss = 0.16693, dev loss = 0.27398, dev f1 score = 0.92858, Time 249m 8s (- 1062m 7s)
+Update best f1: 0.92718 -> 0.92858, saving model to conv_sampler.pth
+Epoch 20/100: training loss = 0.17344, dev loss = 0.26149, dev f1 score = 0.92455, Time 262m 26s (- 1049m 46s)
+Epoch 21/100: training loss = 0.16028, dev loss = 0.26239, dev f1 score = 0.92734, Time 275m 33s (- 1036m 36s)
+Epoch 22/100: training loss = 0.16166, dev loss = 0.27261, dev f1 score = 0.92471, Time 288m 39s (- 1023m 24s)
+Epoch 23/100: training loss = 0.16583, dev loss = 0.27919, dev f1 score = 0.92636, Time 301m 45s (- 1010m 13s)
+Epoch 24/100: training loss = 0.15013, dev loss = 0.28724, dev f1 score = 0.92521, Time 314m 51s (- 997m 2s)
+Epoch 25/100: training loss = 0.15905, dev loss = 0.29343, dev f1 score = 0.92601, Time 327m 57s (- 983m 53s)
+Epoch 26/100: training loss = 0.15682, dev loss = 0.29040, dev f1 score = 0.92685, Time 341m 3s (- 970m 42s)
+Epoch 27/100: training loss = 0.15526, dev loss = 0.30651, dev f1 score = 0.92445, Time 354m 9s (- 957m 32s)
+Epoch 28/100: training loss = 0.14818, dev loss = 0.30748, dev f1 score = 0.92591, Time 367m 14s (- 944m 21s)
+Epoch 29/100: training loss = 0.15234, dev loss = 0.28762, dev f1 score = 0.92642, Time 380m 20s (- 931m 9s)
+Epoch 30/100: training loss = 0.14558, dev loss = 0.30906, dev f1 score = 0.92108, Time 393m 24s (- 917m 57s)
+Epoch 31/100: training loss = 0.15609, dev loss = 0.29358, dev f1 score = 0.92492, Time 406m 29s (- 904m 46s)
+Epoch 32/100: training loss = 0.14662, dev loss = 0.31064, dev f1 score = 0.92489, Time 419m 35s (- 891m 37s)
+Epoch 33/100: training loss = 0.14720, dev loss = 0.27177, dev f1 score = 0.92672, Time 432m 40s (- 878m 28s)
+Epoch 34/100: training loss = 0.14337, dev loss = 0.29775, dev f1 score = 0.92631, Time 445m 46s (- 865m 19s)
+Epoch 35/100: training loss = 0.15216, dev loss = 0.29723, dev f1 score = 0.92388, Time 458m 50s (- 852m 7s)
+Epoch 36/100: training loss = 0.14514, dev loss = 0.27625, dev f1 score = 0.93222, Time 471m 54s (- 838m 56s)
+Update best f1: 0.92858 -> 0.93222, saving model to conv_sampler.pth
+Epoch 37/100: training loss = 0.14512, dev loss = 0.29450, dev f1 score = 0.92476, Time 485m 10s (- 826m 6s)
+Epoch 38/100: training loss = 0.14828, dev loss = 0.31317, dev f1 score = 0.92243, Time 498m 16s (- 812m 58s)
+Epoch 39/100: training loss = 0.14093, dev loss = 0.31233, dev f1 score = 0.92299, Time 511m 20s (- 799m 47s)
+Epoch 40/100: training loss = 0.14147, dev loss = 0.29047, dev f1 score = 0.92506, Time 524m 24s (- 786m 36s)
+Epoch 41/100: training loss = 0.14390, dev loss = 0.29957, dev f1 score = 0.92214, Time 537m 29s (- 773m 27s)
+Epoch 42/100: training loss = 0.15330, dev loss = 0.30401, dev f1 score = 0.93317, Time 550m 34s (- 760m 19s)
+Update best f1: 0.93222 -> 0.93317, saving model to conv_sampler.pth
+Epoch 43/100: training loss = 0.14771, dev loss = 0.34267, dev f1 score = 0.92757, Time 563m 51s (- 747m 27s)
+Epoch 44/100: training loss = 0.14960, dev loss = 0.30877, dev f1 score = 0.92830, Time 576m 56s (- 734m 17s)
+Epoch 45/100: training loss = 0.14282, dev loss = 0.33506, dev f1 score = 0.92644, Time 590m 1s (- 721m 8s)
+Epoch 46/100: training loss = 0.14590, dev loss = 0.31877, dev f1 score = 0.92858, Time 603m 6s (- 707m 59s)
+Epoch 47/100: training loss = 0.14022, dev loss = 0.30407, dev f1 score = 0.92906, Time 616m 10s (- 694m 50s)
+Epoch 48/100: training loss = 0.13733, dev loss = 0.28885, dev f1 score = 0.92651, Time 629m 16s (- 681m 42s)
+Epoch 49/100: training loss = 0.13694, dev loss = 0.32203, dev f1 score = 0.92601, Time 642m 20s (- 668m 33s)
+Epoch 50/100: training loss = 0.15561, dev loss = 0.32117, dev f1 score = 0.92381, Time 655m 25s (- 655m 25s)
+Epoch 51/100: training loss = 0.14301, dev loss = 0.31133, dev f1 score = 0.92788, Time 668m 31s (- 642m 18s)
+Epoch 52/100: training loss = 0.13958, dev loss = 0.32979, dev f1 score = 0.92619, Time 681m 39s (- 629m 13s)
+Epoch 53/100: training loss = 0.13635, dev loss = 0.30420, dev f1 score = 0.92995, Time 721m 31s (- 639m 50s)
+Epoch 54/100: training loss = 0.13985, dev loss = 0.32641, dev f1 score = 0.92504, Time 734m 19s (- 625m 31s)
+Epoch 55/100: training loss = 0.14662, dev loss = 0.30354, dev f1 score = 0.92719, Time 747m 6s (- 611m 16s)
+Epoch 56/100: training loss = 0.14352, dev loss = 0.30261, dev f1 score = 0.92678, Time 759m 53s (- 597m 3s)
+Epoch 57/100: training loss = 0.14239, dev loss = 0.32878, dev f1 score = 0.92849, Time 772m 40s (- 582m 53s)
+Epoch 58/100: training loss = 0.14956, dev loss = 0.29513, dev f1 score = 0.93038, Time 785m 27s (- 568m 46s)
+Epoch 59/100: training loss = 0.14286, dev loss = 0.29464, dev f1 score = 0.92596, Time 798m 13s (- 554m 42s)
+Epoch 60/100: training loss = 0.14320, dev loss = 0.30375, dev f1 score = 0.93050, Time 811m 0s (- 540m 40s)
+Epoch 61/100: training loss = 0.14028, dev loss = 0.29649, dev f1 score = 0.92712, Time 823m 46s (- 526m 40s)
+Epoch 62/100: training loss = 0.14321, dev loss = 0.31979, dev f1 score = 0.93163, Time 836m 33s (- 512m 43s)
+Epoch 63/100: training loss = 0.13662, dev loss = 0.30510, dev f1 score = 0.93056, Time 849m 19s (- 498m 48s)
+Epoch 64/100: training loss = 0.14284, dev loss = 0.31187, dev f1 score = 0.92895, Time 862m 6s (- 484m 56s)
+Epoch 65/100: training loss = 0.13136, dev loss = 0.32259, dev f1 score = 0.93116, Time 874m 53s (- 471m 5s)
+Epoch 66/100: training loss = 0.14436, dev loss = 0.31788, dev f1 score = 0.92621, Time 887m 40s (- 457m 17s)
+Epoch 67/100: training loss = 0.13743, dev loss = 0.29561, dev f1 score = 0.92972, Time 900m 27s (- 443m 30s)
+Epoch 68/100: training loss = 0.13577, dev loss = 0.32484, dev f1 score = 0.92797, Time 913m 14s (- 429m 45s)
+Epoch 69/100: training loss = 0.13920, dev loss = 0.32355, dev f1 score = 0.93070, Time 926m 0s (- 416m 2s)
+Epoch 70/100: training loss = 0.13661, dev loss = 0.33216, dev f1 score = 0.92987, Time 938m 48s (- 402m 20s)
+Epoch 71/100: training loss = 0.13993, dev loss = 0.28022, dev f1 score = 0.92596, Time 951m 34s (- 388m 40s)
+Epoch 72/100: training loss = 0.13769, dev loss = 0.33532, dev f1 score = 0.92817, Time 964m 21s (- 375m 1s)
+Epoch 73/100: training loss = 0.14100, dev loss = 0.33618, dev f1 score = 0.92747, Time 977m 8s (- 361m 24s)
+Epoch 74/100: training loss = 0.14403, dev loss = 0.31558, dev f1 score = 0.92692, Time 989m 54s (- 347m 48s)
+Epoch 75/100: training loss = 0.13187, dev loss = 0.34566, dev f1 score = 0.92614, Time 1002m 41s (- 334m 13s)
+Epoch 76/100: training loss = 0.14015, dev loss = 0.31483, dev f1 score = 0.92464, Time 1015m 28s (- 320m 40s)
+Epoch 77/100: training loss = 0.13628, dev loss = 0.32138, dev f1 score = 0.92487, Time 1028m 14s (- 307m 8s)
+Epoch 78/100: training loss = 0.14694, dev loss = 0.31004, dev f1 score = 0.93066, Time 1041m 1s (- 293m 37s)
+Epoch 79/100: training loss = 0.14103, dev loss = 0.33299, dev f1 score = 0.92891, Time 1053m 48s (- 280m 7s)
+Epoch 80/100: training loss = 0.14249, dev loss = 0.32664, dev f1 score = 0.92497, Time 1066m 35s (- 266m 38s)
+Epoch 81/100: training loss = 0.13668, dev loss = 0.33620, dev f1 score = 0.92520, Time 1079m 21s (- 253m 10s)
+Epoch 82/100: training loss = 0.13498, dev loss = 0.34402, dev f1 score = 0.92666, Time 1092m 6s (- 239m 43s)
+Epoch 83/100: training loss = 0.12785, dev loss = 0.35992, dev f1 score = 0.92375, Time 1104m 53s (- 226m 18s)
+Epoch 84/100: training loss = 0.13764, dev loss = 0.35825, dev f1 score = 0.92423, Time 1117m 39s (- 212m 53s)
+Epoch 85/100: training loss = 0.14417, dev loss = 0.32484, dev f1 score = 0.92753, Time 1130m 26s (- 199m 29s)
+Epoch 86/100: training loss = 0.13044, dev loss = 0.34669, dev f1 score = 0.92936, Time 1143m 11s (- 186m 6s)
+Epoch 87/100: training loss = 0.13479, dev loss = 0.34548, dev f1 score = 0.92586, Time 1155m 58s (- 172m 43s)
+Epoch 88/100: training loss = 0.14891, dev loss = 0.32750, dev f1 score = 0.92468, Time 1168m 44s (- 159m 22s)
+Epoch 89/100: training loss = 0.14464, dev loss = 0.36198, dev f1 score = 0.92901, Time 1181m 29s (- 146m 1s)
+Epoch 90/100: training loss = 0.13599, dev loss = 0.33342, dev f1 score = 0.92834, Time 1194m 15s (- 132m 41s)
+Epoch 91/100: training loss = 0.14072, dev loss = 0.32435, dev f1 score = 0.93014, Time 1207m 1s (- 119m 22s)
+Epoch 92/100: training loss = 0.13652, dev loss = 0.34529, dev f1 score = 0.93021, Time 1219m 48s (- 106m 4s)
+Epoch 93/100: training loss = 0.13777, dev loss = 0.34265, dev f1 score = 0.92918, Time 1232m 35s (- 92m 46s)
+Epoch 94/100: training loss = 0.13358, dev loss = 0.35809, dev f1 score = 0.92496, Time 1245m 22s (- 79m 29s)
+Epoch 95/100: training loss = 0.13328, dev loss = 0.37080, dev f1 score = 0.92795, Time 1258m 8s (- 66m 13s)
+Epoch 96/100: training loss = 0.13242, dev loss = 0.33873, dev f1 score = 0.92571, Time 1270m 53s (- 52m 57s)
+Epoch 97/100: training loss = 0.13326, dev loss = 0.34074, dev f1 score = 0.92816, Time 1283m 40s (- 39m 42s)
+Epoch 98/100: training loss = 0.13943, dev loss = 0.36899, dev f1 score = 0.92443, Time 1296m 26s (- 26m 27s)
+Epoch 99/100: training loss = 0.14142, dev loss = 0.33799, dev f1 score = 0.92536, Time 1309m 14s (- 13m 13s)
+Epoch 100/100: training loss = 0.12909, dev loss = 0.34368, dev f1 score = 0.92629, Time 1322m 0s (- 0m 0s)
+Best dev f1: 0.93317
