@@ -41,7 +41,7 @@ class sentence:
         self.QA=list(zip(self.tag,self.value))
         self.QAdict=dict(self.QA)
         #print(vars(self),file=sys.stderr)
-def preprocess(dir,tokenizer,k=0,side=1):
+def preprocess(dir,tokenizer,merge_type=0,one_ans=0,k=0,side=1):
     print('Start reading and parsing csv',file=sys.stderr)
     tags=['調達年度','都道府県','入札件名','施設名','需要場所(住所)','調達開始日','調達終了日','公告日','仕様書交付期限','質問票締切日時','資格申請締切日時','入札書締切日時',\
         '開札日時','質問箇所所属/担当者','質問箇所TEL/FAX','資格申請送付先','資格申請送付先部署/担当者名','入札書送付先','入札書送付先部署/担当者名','開札場所']
@@ -83,6 +83,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
         for a in res:
             bnd=[]
             toklen=[]
+            has_ans=[]
             n=len(a)
             i,j=0,0
             while i<n:
@@ -90,6 +91,7 @@ def preprocess(dir,tokenizer,k=0,side=1):
                     curlen=len(tokenizer.tokenize(a[i].text+sep_token))
                     bnd.append((i,i+1))
                     toklen.append(curlen)
+                    has_ans.append(False)
                     i+=1
                 else:
                     curlen=0
@@ -99,14 +101,17 @@ def preprocess(dir,tokenizer,k=0,side=1):
                         j+=1
                     bnd.append((i,j))
                     toklen.append(curlen)
+                    has_ans.append(True)
                     i=j
             n=len(bnd)
             l,r=0,0
             while l<n:
                 r=l
                 curlen=0
-                while r<n and curlen+toklen[r]<=512-16:
+                hans=False
+                while r<n and curlen+toklen[r]<=512-16 and not (one_ans and hans and has_ans[r]):
                     curlen+=toklen[r]
+                    hans|=has_ans[r]
                     r+=1
                 qa_text=tag
                 con_text=''
@@ -120,10 +125,14 @@ def preprocess(dir,tokenizer,k=0,side=1):
                         con_text+=sep_token+a[j].text
                         if flag:
                             try:
-                                ans_text+=sep_token+a[j].QAdict[tag]
+                                if merge_type==0:
+                                    ans_text+=sep_token+a[j].QAdict[tag]
+                                elif merge_type==1:
+                                    pos=a[j].text.find(a[j].QAdict[tag])
+                                    assert pos!=-1
+                                    ans_text+=sep_token+a[j].text[:pos+len(a[j].QAdict[tag])]
                             except:
-                                print(tag,j,a[j].QAdict,file=sys.stderr)
-                                print(a[j].tag,a[j].value,a[j].QA,file=sys.stderr)
+                                print(a[j].text,a[j].QA,file=sys.stderr)
                 con_text=con_text[len(sep_token):]
                 ans_text=ans_text[len(sep_token):]
                 doc_id=a[bnd[l][0]].filename[-18:-9]
@@ -137,7 +146,11 @@ def preprocess(dir,tokenizer,k=0,side=1):
     print(len(ret),file=sys.stderr)
     return ret, index_list 
 
-#preprocess('release/train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,1)
-#preprocess(input_files,tokenizer,k,side)
+preprocess('release/train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,0,0,1)
+#preprocess(input_files,tokenizer,merge_type,one_ans,k,side)
 #side=0: current_window[l,r) => next_window[l+k,...)
 #side=1: current_window[l,r) => next_window[r-k,...)
+#merge_type=0: AB[SEP]CD with answer BD will be B[SEP]D
+#merge_type=1: AB[SEP]CD with answer BD will be B[SEP]CD (failed)
+#one_ans=0: each data may have more than one contiguous answer, and let the first one be the answer.
+#one_ans=1: each data will have only one contiguous answer.
