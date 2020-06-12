@@ -139,14 +139,14 @@ def preprocess(dir,tokenizer,merge_type=0,one_ans=0,k=0,side=1):
                 pid=a[bnd[l][0]].page
                 ret.append(QAExample(doc_id,sid,pid,con_text,qa_text,ans_text))
                 if side==1:
-                    l=r-k
+                    l=max(r-k,l+1)
                 else:
                     l=l+k 
 
     print(len(ret),file=sys.stderr)
     return ret, index_list 
 
-preprocess('release/train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,0,0,1)
+#preprocess('release/train/ca_data/*',AutoTokenizer.from_pretrained("bert-base-multilingual-cased"),0,0,0,1)
 #preprocess(input_files,tokenizer,merge_type,one_ans,k,side)
 #side=0: current_window[l,r) => next_window[l+k,...)
 #side=1: current_window[l,r) => next_window[r-k,...)
