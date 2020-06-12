@@ -1,5 +1,5 @@
 
-Train with `--learning_rate=3e-5 --epochs=20` is probably enough for performance comparison.
+Train with `--learning_rate=3e-5 --epochs=20 --ratio=? --use_sampler --round=2600` is probably enough for performance comparison.
 
 | folder | important hyper | info | comment |
 | - | - | - | - |
