@@ -105,7 +105,7 @@ def preprocess(dir,tokenizer,merge_type=0,one_ans=0,k=0,side=1):
                     i=j
             n=len(bnd)
             l,r=0,0
-            while l<n:
+            while r<n:
                 r=l
                 curlen=0
                 hans=False
