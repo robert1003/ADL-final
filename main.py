@@ -57,7 +57,7 @@ def main():
     dev_path = os.path.join(args.dev_data, 'ca_data/*')
     
     print('Load train data...', file=sys.stderr)
-    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, args.overlap_k, 1)
+    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, args.overlap_k, (0 if args.overlap_k != 0 else 1))
     QAFeatures_train, QAdataset_train = QAExamples_to_QAFeatureDataset(QAExamples_train, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
@@ -79,8 +79,7 @@ def main():
             train_dataloader = DataLoader(QAdataset_train, batch_size=BATCH_SIZE, shuffle=True)
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
-        pretrained_model = AutoModel.from_pretrained(args.pretrained_model)
-        model = Model(pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
+        model = Model(args.pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
 
         optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)
         criterion = nn.CrossEntropyLoss()

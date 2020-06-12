@@ -1,10 +1,11 @@
 import torch
 import torch.nn as nn
+from transformers import AutoModel
 
 class Model(nn.Module):
     def __init__(self, pretrained_model, model_type, hidden_size = 768, question_length = 15, kernel_size = 3, padding = 1):
         super(Model, self).__init__()
-        self.model = pretrained_model
+        self.model = AutoModel.from_pretrained(pretrained_model)
         self.question_length = question_length
         self.model_type = model_type
         padding = (kernel_size - 1) // 2
