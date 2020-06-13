@@ -1,6 +1,4 @@
 
-Train with `--learning_rate=3e-5 --epochs=20 --ratio=? --use_sampler --round=2600` is probably enough for performance comparison.
-
 | folder | important hyper | info | comment |
 | - | - | - | - |
 | conv_robert_1 | kernel_size=5 | conv_dev.csv: 0.9218325073071548 | |
