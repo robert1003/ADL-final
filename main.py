@@ -32,6 +32,8 @@ def Arg():
     arg_parser.add_argument('--kernel_size', type=int, default=3, help='kernel_size in conv model')
     arg_parser.add_argument('--overlap_k', type=int, default=0, help='overlap in preprocess')
     arg_parser.add_argument('--batch_size', type=int, default=4)
+    arg_parser.add_argument('--hw2_QA_bert', type=str, help='path of hw2_QA_bert')
+    arg_parser.add_argument('--merge_type', type=int, default=0, help='merge type')
     args = arg_parser.parse_args()
     return args
 
@@ -57,12 +59,12 @@ def main():
     dev_path = os.path.join(args.dev_data, 'ca_data/*')
     
     print('Load train data...', file=sys.stderr)
-    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, args.overlap_k, (0 if args.overlap_k != 0 else 1))
+    QAExamples_train, train_index_list = preprocess(train_path, tokenizer, args.overlap_k, (0 if args.overlap_k != 0 else 1), merge_type=args.merge_type)
     QAFeatures_train, QAdataset_train = QAExamples_to_QAFeatureDataset(QAExamples_train, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
     print('Load dev data...', file=sys.stderr)
-    QAExamples_dev, dev_index_list = preprocess(dev_path, tokenizer, 0, 1)
+    QAExamples_dev, dev_index_list = preprocess(dev_path, tokenizer, 0, 1, merge_type=args.merge_type)
     QAFeatures_dev, QAdataset_dev = QAExamples_to_QAFeatureDataset(QAExamples_dev, tokenizer, 'train')
     print('DONE', file=sys.stderr)
     
@@ -80,6 +82,8 @@ def main():
         dev_dataloader = DataLoader(QAdataset_dev, batch_size=BATCH_SIZE, shuffle=False)
         
         model = Model(args.pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
+        if args.hw2_QA_bert is not None:
+            model.model.load_state_dict(torch.load(args.hw2_QA_bert)['bert_state_dict'])
 
         optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)
         criterion = nn.CrossEntropyLoss()

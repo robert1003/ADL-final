@@ -23,6 +23,7 @@ def Arg():
     arg_parser.add_argument('--batch_size', type=int, default=32)
     arg_parser.add_argument('--output_file', type=str, default='prediction.csv')
     arg_parser.add_argument('--kernel_size', type=int, default=3)
+    arg_parser.add_argument('--merge_type', type=int, default=0, help='merge type')
     args = arg_parser.parse_args()
     return args
 
@@ -39,7 +40,7 @@ def main():
     data_path = os.path.join(args.data, 'ca_data/*')
     
     print('Load data...', file=sys.stderr)
-    QAExamples, lines = preprocess(data_path, tokenizer, 0, 1)
+    QAExamples, lines = preprocess(data_path, tokenizer, 0, 1, merge_type=args.merge_type)
     QAFeatures, QAdataset = QAExamples_to_QAFeatureDataset(QAExamples, tokenizer, 'test')
     print('DONE', file=sys.stderr)
     
