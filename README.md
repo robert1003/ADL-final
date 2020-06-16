@@ -16,3 +16,4 @@
 | conv_distilbert_robert_15 | bert=distilbert-base-multilingual-cased | conv_dis_dev.csv: 0.9303977633752702 | | 
 | conv_ltf0501 | kernel_size=7, ratio=3.0 | dev f1: 0.92911 | transfer learning from hw2 |
 | conv_deep_ltf0501 | kernel_size=7, ratio=3.0, | dev f1: 0.92379 | transfer learning from hw2, CNN: 256 -> 64 -> 1 | 
+| linear_ltf0501 | ratio=3.0, | dev f1: 0.89568 | linear is not good | 
