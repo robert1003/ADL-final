@@ -12,6 +12,7 @@ def Train(model, train_dataloader, dev_dataloader, dev_index_list, QAExamples, Q
     model = model.to(device)
 
     best_f1 = 0
+    best_loss = 1e9
     start = time.time()
     for epoch in range(epochs): 
         train_loss, step = 0, 0
@@ -75,16 +76,26 @@ def Train(model, train_dataloader, dev_dataloader, dev_index_list, QAExamples, Q
             epoch + 1, epochs, train_loss, dev_loss, dev_f1, timeSince(start, epoch + 1, epochs))) 
 
         if best_f1 < dev_f1:
-            logging.info('Update best f1: {:.5f} -> {:.5f}, saving model to {}'.format(best_f1, dev_f1, model_file))
+            logging.info('Update best f1: {:.5f} -> {:.5f}, saving model to {}'.format(best_f1, dev_f1, f'f1_{model_file}'))
             best_f1 = dev_f1
             torch.save(
                 {
                     'state_dict': model.state_dict(),
-                    'opt_dict': optimizer.state_dict(),
                     'best_dev_f1': best_f1,
                     'iter': epoch + 1
                 },
-                model_file
+                f'f1_{model_file}'
+            )
+        if best_loss > dev_loss:
+            logging.info('Update best loss: {:.5f} -> {:.5f}, saving model to {}'.format(best_loss, dev_loss, f'loss_{model_file}'))
+            best_loss = dev_loss
+            torch.save(
+                {
+                    'state_dict': model.state_dict(),
+                    'best_dev_loss': best_loss,
+                    'iter': epoch + 1
+                },
+                f'loss_{model_file}'
             )
 
-    logging.info('Best dev f1: {:.5f}'.format(best_f1))
+    logging.info('Best dev f1: {:.5f} Best dev loss: {:.5f}'.format(best_f1, best_loss))
