@@ -57,7 +57,7 @@ def QAExample_to_QAFeature(idx, QAExample, tokenizer, set_type, max_length=512, 
         question_text += ['[PAD]'] * (max_question_length - len(question_text))
     
     positions = []
-    offset = len(question_text) + 1
+    offset = 0#len(question_text) + 1
     if set_type == 'train' and QAExample.answerable:
         ans_t = QAExample.answer_text
         pos = QAExample.context_text.find(ans_t)
