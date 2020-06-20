@@ -17,4 +17,4 @@ do
   other_args="$other_args ${array[$i]}"
 done
 
-echo "python3 main.py --train $model_type --cuda $cuda_num --model_name $model_name --log_name $log_name $other_args"
+python3 main.py --train $model_type --cuda $cuda_num --model_name $model_name --log_name $log_name $other_args
