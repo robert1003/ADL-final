@@ -55,7 +55,7 @@ def post_process(
     tokenizer,
     offset=15,
     max_len=100,
-    null_threshold=0.5,
+    null_threshold=0.2,
     two_ans_threshold = 0.3,
     k=5,
     special_list = ['仕様書交付期限', '入札書締切日時', '質問箇所TEL/FAX'],
