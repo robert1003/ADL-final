@@ -57,17 +57,24 @@ def QAExample_to_QAFeature(idx, QAExample, tokenizer, set_type, max_length=512, 
         question_text += ['[PAD]'] * (max_question_length - len(question_text))
     
     positions = []
-    offset = 0#len(question_text) + 1
+    offset = len(question_text) + 1
     if set_type == 'train' and QAExample.answerable:
-        for ttext in QAExample.answer_text.split('[SEP]'):
-            for text in ttext.split(';'):
-                pos = QAExample.context_text.find(text)
-                if pos == -1:
-                    print(text, QAExample)
-                    continue
-                start_pos = len(tokenizer.tokenize(QAExample.context_text[:pos]))
-                end_pos = start_pos + len(tokenizer.tokenize(text))
-                positions.append((start_pos + offset, end_pos + offset))
+        ans_t = QAExample.answer_text
+        pos = QAExample.context_text.find(ans_t)
+        if pos == -1:
+            for ttext in QAExample.answer_text.split('[SEP]'):
+                for text in ttext.split(';'):
+                    pos = QAExample.context_text.find(text)
+                    if pos == -1:
+                        print(text, QAExample)
+                        continue
+                    start_pos = len(tokenizer.tokenize(QAExample.context_text[:pos]))
+                    end_pos = start_pos + len(tokenizer.tokenize(text))
+                    positions.append((start_pos + offset, end_pos + offset))
+        else:
+            start_pos = len(tokenizer.tokenize(QAExample.context_text[:pos]))
+            end_pos = start_pos + len(tokenizer.tokenize(ans_t))
+            positions.append((start_pos + offset, end_pos + offset))
 
     context_text = tokenizer.convert_tokens_to_string(context_text).replace('#', '')
     question_text = tokenizer.convert_tokens_to_string(question_text).replace('#', '')

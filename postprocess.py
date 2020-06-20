@@ -136,26 +136,20 @@ def post_process(
                                 ans
                             ))
                             continue
-                        
-                    
 
         # only one
         start_pos, end_pos = possible[0][1]
         ans = tokenizer.decode(
                 QAfeature.input_ids[start_pos + offset:end_pos + offset + 1], 
-                skip_special_tokens=True
+                skip_special_tokens=False
             ).replace(' ', '').replace('#', '')
-        if ans.find('[SEP]') != -1:
-            print('truncating', ans, file=sys.stderr)
-            ans = ans[:ans.find('[SEP]')]
-
-        # the highest prob 
-        if ans != '':
+        anss = ans.split('[SEP]')
+        for ans in anss:
             answer_tuples.append((
                 QAexample.document_id,
                 get_index(QAexample, ans),
                 QAexample.question_text,
-                ans
+                ans.replace('[PAD]', '')
             ))
     return answer_tuples
 
