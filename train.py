@@ -65,18 +65,21 @@ def Train(model, train_dataloader, dev_dataloader, dev_index_list, QAExamples, Q
         raw_end_logits = torch.cat(raw_end_logits, dim=0)
 
         # calculate f1 score
-        prediction = post_process(raw_start_logits, raw_end_logits, QAExamples, QAFeatures, tokenizer)
-        name = gen_name() + '.csv'
-        Output(prediction, dev_index_list, name)
-        dev_f1 = score(dev_ref_file, name)
-        os.system(f'rm {name}')
+        dev_scores = []
+        for thres in [0.2, 0.3, 0.4, 0.5, 0.6]:
+            prediction = post_process(raw_start_logits, raw_end_logits, QAExamples, QAFeatures, tokenizer, null_threshold=thres)
+            name = gen_name() + '.csv'
+            Output(prediction, dev_index_list, name)
+            dev_scores.append((score(dev_ref_file, name), thres))
+            os.system(f'rm {name}')
+        dev_f1, thres = max(dev_scores)
 
         dev_loss /= step
         logging.info('Epoch {}/{}: training loss = {:.5f}, dev loss = {:.5f}, dev f1 score = {:.5f}, Time {}'.format(
             epoch + 1, epochs, train_loss, dev_loss, dev_f1, timeSince(start, epoch + 1, epochs))) 
 
         if best_f1 < dev_f1:
-            logging.info('Update best f1: {:.5f} -> {:.5f}, saving model to {}'.format(best_f1, dev_f1, f'f1_{model_file}'))
+            logging.info('Update best f1: {:.5f} -> {:.5f}, thres {:.2f}, saving model to {}'.format(best_f1, dev_f1, thres, f'f1_{model_file}'))
             best_f1 = dev_f1
             torch.save(
                 {
