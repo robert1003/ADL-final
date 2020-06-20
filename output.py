@@ -16,7 +16,7 @@ def Output(output_list, index_list, output_file):
             predictions = ''
             if name in mp:
                 QA_list = mp[name]
-                predictions = ' '.join(['{tag}:{value}'.format(tag=tag.replace(' ', ''), value=value.replace(' ', '')) for tag, value in QA_list])
+                predictions = ' '.join({'{tag}:{value}'.format(tag=tag.replace(' ', ''), value=value.replace(' ', '')) for tag, value in QA_list})
             else:
                 predictions = 'NONE'
             output.append({'ID': name, 'Prediction': predictions})
