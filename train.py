@@ -66,7 +66,7 @@ def Train(model, train_dataloader, dev_dataloader, dev_index_list, QAExamples, Q
 
         # calculate f1 score
         dev_scores = []
-        for thres in [0.2, 0.3, 0.4, 0.5, 0.6]:
+        for thres in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]:
             prediction = post_process(raw_start_logits, raw_end_logits, QAExamples, QAFeatures, tokenizer, null_threshold=thres)
             name = gen_name() + '.csv'
             Output(prediction, dev_index_list, name)
