@@ -1,20 +1,25 @@
 import torch
 from tqdm import tqdm
 
-def get_index(QAExample, ans):
-    ans_pos = QAExample.context_text.find(ans)
-    base_idx, now_pos = 0, QAExample.context_text.find('[SEP]')
-    loop_cnt = 0
-    while now_pos < ans_pos and now_pos != -1:
-        loop_cnt += 1
-        base_idx += 1
-        now_pos = QAExample.context_text.find('[SEP]', now_pos + 1)
-        if loop_cnt > 100:
+def get_index(index, tokens, target, tokenizer):
+    st, ed, idx, cnt = -1, -1, 0, 0
+    for i, tok in enumerate(tokens):
+        if tok == '</s>':
+            cnt += 1
+            continue
+        if target[idx] == tok:
+            if st == -1:
+                st = i
+            ed = i
+            idx += 1
+        else:
+            st, ed, idx = -1, -1, 0
+        if idx >= len(target):
             break
-    if loop_cnt > 100:
-        raise Exception('infinite loop while getting index for {} with answer {}'.format(QAExample, ans))
-        
-    return QAExample.index[base_idx]
+            
+    print(target, tokens[st:ed+1], index[cnt])
+    assert st != -1 and ed != -1
+    return index[cnt]
 
 def is_datatime(time):
     # hr:mn or hr：mn
@@ -139,15 +144,21 @@ def post_process(
 
         # only one
         start_pos, end_pos = possible[0][1]
+        raw_ans = tokenizer.convert_ids_to_tokens(
+            QAfeature.input_ids[start_pos + offset:end_pos + offset + 1], 
+            skip_special_tokens=False
+        )
         ans = tokenizer.decode(
-                QAfeature.input_ids[start_pos + offset:end_pos + offset + 1], 
-                skip_special_tokens=False
-            ).replace(' ', '').replace('#', '')
+            QAfeature.input_ids[start_pos + offset:end_pos + offset + 1], 
+            skip_special_tokens=False
+        ).replace(' ', '').replace('#', '').replace('▁', '')
+        from itertools import groupby
+        raw_anss = [list(g) for k, g in groupby(raw_ans, lambda x: x == '[SEP]') if not k]
         anss = ans.split('[SEP]')
         for ans in anss:
             answer_tuples.append((
                 QAexample.document_id,
-                get_index(QAexample, ans),
+                get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans, tokenizer),
                 QAexample.question_text,
                 ans.replace('[PAD]', '')
             ))
