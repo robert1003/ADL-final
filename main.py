@@ -83,7 +83,7 @@ def main():
         
         model = Model(args.pretrained_model, model_type=args.train, kernel_size=args.kernel_size)
         if args.hw2_QA_bert is not None:
-            model.model.load_state_dict(torch.load(args.hw2_QA_bert)['bert_state_dict'])
+            model.model.load_state_dict(torch.load(args.hw2_QA_bert, map_location=device)['bert_state_dict'])
 
         optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-8)
         criterion = nn.CrossEntropyLoss()
