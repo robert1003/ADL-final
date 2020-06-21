@@ -18,3 +18,4 @@
 | conv_deep_ltf0501 | kernel_size=7, ratio=3.0, | dev f1: 0.92379 | transfer learning from hw2, CNN: 256 -> 64 -> 1 | 
 | linear_ltf0501 | ratio=3.0, | dev f1: 0.89568 | linear is not good | 
 | conv_retry | no_sampler, 20 epochs, lr=3e-5 | best loss: 0.19300 (**test f1: 0.93802**), best f1: 0.93791 (**test f1: 0.93386**) | improved preprocess |
+| conv_hw2_retry | ratio=2.0, round=2000, bert.pth | best loss: 0.17028, best f1: 0.94039(**test f1: 0.94991**) | improved preprocess with bert |
