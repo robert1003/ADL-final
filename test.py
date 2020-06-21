@@ -24,6 +24,7 @@ def Arg():
     arg_parser.add_argument('--output_file', type=str, default='prediction.csv')
     arg_parser.add_argument('--kernel_size', type=int, default=3)
     arg_parser.add_argument('--merge_type', type=int, default=0, help='merge type')
+    arg_parser.add_argument('--null_threshold', type=float, default=0.5)
     args = arg_parser.parse_args()
     return args
 
@@ -74,7 +75,7 @@ def main():
     print('Done')
 
     print('Postprocessing...')
-    prediction = post_process(raw_start_logits, raw_end_logits, QAExamples, QAFeatures, tokenizer)
+    prediction = post_process(raw_start_logits, raw_end_logits, QAExamples, QAFeatures, tokenizer, null_threshold=args.null_threshold)
     print('Done')
 
     # output file
