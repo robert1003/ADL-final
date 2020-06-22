@@ -19,3 +19,4 @@
 | linear_ltf0501 | ratio=3.0, | dev f1: 0.89568 | linear is not good | 
 | conv_retry | no_sampler, 20 epochs, lr=3e-5 | best loss: 0.19300 (**test f1: 0.93802**), best f1: 0.93791 (**test f1: 0.93386**) | improved preprocess |
 | conv_hw2_retry | ratio=2.0, round=2000, bert.pth | best loss: 0.17028, best f1: 0.94039(**test f1: 0.94991**) | improved preprocess with bert |
+| parent_sampler | ratio=2.0, round=2000, bert.pth, preprocess_parent | best loss: 0.05278, best f1:0.94723(**test f1: 0.95025**) | preprocess_parent better |

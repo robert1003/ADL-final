@@ -1,0 +1,92 @@
+Namespace(batch_size=4, cuda=1, dev_data='../release/dev', dev_ref_file='../release/dev/dev_ref.csv', epochs=20, hw2_QA_bert='/tmp2/robert1003/ADL_final/conv_hw2_retry/bert.pth', kernel_size=7, learning_rate=3e-05, log_name='jap_whole.log', merge_type=0, model_name='jap_whole.pth', overlap_k=0, pretrained_model='bert-base-multilingual-cased', ratio=2.0, round=2000, train='conv', train_data='../release/train', use_sampler=True)
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "directionality": "bidi",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "type_vocab_size": 2,
+  "vocab_size": 119547
+}
+
+loading file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-vocab.txt from cache at /home/robert1003/.cache/torch/transformers/96435fa287fbf7e469185f1062386e05a075cadbf6838b74da22bf64b080bc32.99bcd55fc66f4f3360bc49ba472b940b8dcf223ea6a345deb969d607ca900729
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "directionality": "bidi",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "type_vocab_size": 2,
+  "vocab_size": 119547
+}
+
+loading weights file https://cdn.huggingface.co/bert-base-multilingual-cased-pytorch_model.bin from cache at /home/robert1003/.cache/torch/transformers/3d1d2b2daef1e2b3ddc2180ddaae8b7a37d5f279babce0068361f71cd548f615.7131dcb754361639a7d5526985f880879c9bfd144b65a0bf50590bddb7de9059
+Epoch 1/20: training loss = 0.25523, dev loss = 0.09637, dev f1 score = 0.92050, Time 12m 52s (- 244m 38s)
+Update best f1: 0.00000 -> 0.92050, thres 0.60, saving model to f1_jap_whole.pth
+Update best loss: 1000000000.00000 -> 0.09637, saving model to loss_jap_whole.pth
+Epoch 2/20: training loss = 0.13516, dev loss = 0.11975, dev f1 score = 0.91721, Time 26m 33s (- 239m 0s)
+Epoch 3/20: training loss = 0.12818, dev loss = 0.10096, dev f1 score = 0.91721, Time 39m 21s (- 223m 3s)
+Epoch 4/20: training loss = 0.11970, dev loss = 0.08543, dev f1 score = 0.93259, Time 52m 18s (- 209m 13s)
+Update best f1: 0.92050 -> 0.93259, thres 0.50, saving model to f1_jap_whole.pth
+Update best loss: 0.09637 -> 0.08543, saving model to loss_jap_whole.pth
+Epoch 5/20: training loss = 0.10971, dev loss = 0.07292, dev f1 score = 0.93540, Time 65m 33s (- 196m 41s)
+Update best f1: 0.93259 -> 0.93540, thres 0.40, saving model to f1_jap_whole.pth
+Update best loss: 0.08543 -> 0.07292, saving model to loss_jap_whole.pth
+Epoch 6/20: training loss = 0.13539, dev loss = 0.09233, dev f1 score = 0.93462, Time 78m 41s (- 183m 37s)
+Epoch 7/20: training loss = 0.12630, dev loss = 0.07584, dev f1 score = 0.92641, Time 91m 28s (- 169m 52s)
+Epoch 8/20: training loss = 0.10713, dev loss = 0.06465, dev f1 score = 0.93954, Time 104m 17s (- 156m 26s)
+Update best f1: 0.93540 -> 0.93954, thres 0.60, saving model to f1_jap_whole.pth
+Update best loss: 0.07292 -> 0.06465, saving model to loss_jap_whole.pth
+Epoch 9/20: training loss = 0.10010, dev loss = 0.07590, dev f1 score = 0.93783, Time 117m 24s (- 143m 29s)
+Epoch 10/20: training loss = 0.09470, dev loss = 0.08116, dev f1 score = 0.92817, Time 130m 6s (- 130m 6s)
+Epoch 11/20: training loss = 0.09454, dev loss = 0.09690, dev f1 score = 0.92508, Time 142m 47s (- 116m 49s)
+Epoch 12/20: training loss = 0.09809, dev loss = 0.06189, dev f1 score = 0.94100, Time 155m 28s (- 103m 38s)
+Update best f1: 0.93954 -> 0.94100, thres 0.60, saving model to f1_jap_whole.pth
+Update best loss: 0.06465 -> 0.06189, saving model to loss_jap_whole.pth
+Epoch 13/20: training loss = 0.07889, dev loss = 0.08411, dev f1 score = 0.93726, Time 168m 28s (- 90m 43s)
+Epoch 14/20: training loss = 0.09271, dev loss = 0.06288, dev f1 score = 0.94453, Time 181m 12s (- 77m 39s)
+Update best f1: 0.94100 -> 0.94453, thres 0.50, saving model to f1_jap_whole.pth
+Epoch 15/20: training loss = 0.08188, dev loss = 0.06385, dev f1 score = 0.94067, Time 194m 4s (- 64m 41s)
+Epoch 16/20: training loss = 0.08979, dev loss = 0.05510, dev f1 score = 0.94723, Time 206m 43s (- 51m 40s)
+Update best f1: 0.94453 -> 0.94723, thres 0.30, saving model to f1_jap_whole.pth
+Update best loss: 0.06189 -> 0.05510, saving model to loss_jap_whole.pth
+Epoch 17/20: training loss = 0.06845, dev loss = 0.06243, dev f1 score = 0.94399, Time 219m 47s (- 38m 47s)
+Epoch 18/20: training loss = 0.08807, dev loss = 0.07683, dev f1 score = 0.94053, Time 232m 27s (- 25m 49s)
+Epoch 19/20: training loss = 0.10700, dev loss = 0.06337, dev f1 score = 0.94316, Time 245m 10s (- 12m 54s)
+Epoch 20/20: training loss = 0.07182, dev loss = 0.05278, dev f1 score = 0.94480, Time 257m 53s (- 0m 0s)
+Update best loss: 0.05510 -> 0.05278, saving model to loss_jap_whole.pth
+Best dev f1: 0.94723 Best dev loss: 0.05278
