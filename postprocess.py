@@ -4,7 +4,7 @@ from tqdm import tqdm
 def get_index(index, tokens, target, tokenizer):
     st, ed, idx, cnt = -1, -1, 0, 0
     for i, tok in enumerate(tokens):
-        if tok == '</s>':
+        if tok == '[SEP]':
             cnt += 1
             continue
         if target[idx] == tok:
@@ -107,6 +107,10 @@ def post_process(
                         QAfeature.input_ids[idxs[0] + offset:idxs[1] + offset + 1], 
                         skip_special_tokens=True
                     ).replace(' ', '').replace('#', '')
+                    raw_ans1 = tokenizer.convert_ids_to_tokens(
+                        QAfeature.input_ids[idxs[0] + offset:idxs[1] + offset + 1], 
+                        skip_special_tokens=True
+                    )
                     if ans1.find('[SEP]') != -1:
                         print('truncating', ans1, file=sys.stderr)
                         ans1 = ans1[:ans1.find('[SEP]')]
@@ -114,11 +118,15 @@ def post_process(
                         QAfeature.input_ids[idxs[2] + offset:idxs[3] + offset + 1], 
                         skip_special_tokens=True
                     ).replace(' ', '').replace('#', '')
+                    raw_ans2 = tokenizer.convert_ids_to_tokens(
+                        QAfeature.input_ids[idxs[2] + offset:idxs[3] + offset + 1], 
+                        skip_special_tokens=True
+                    ).replace(' ', '').replace('#', '')
                     if ans2.find('[SEP]') != -1:
                         print('truncating', ans2, file=sys.stderr)
                         ans1 = ans2[:ans2.find('[SEP]')]
-                    idx1 = get_index(QAexample, ans1)
-                    idx2 = get_index(QAexample, ans2)
+                    idx1 = get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans1, tokenizer)
+                    idx2 = get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans2, tokenizer)
                     
                     if idx1 == idx2:
                         # special case for 質問箇所TEL/FAX
