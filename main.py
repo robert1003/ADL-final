@@ -23,13 +23,13 @@ def Arg():
     arg_parser.add_argument('--dev_data', type=str, default='../release/dev', help='dev data folder')
     arg_parser.add_argument('--dev_ref_file', type=str, default='../release/dev/dev_ref.csv', help='dev ref file path')
     arg_parser.add_argument('--pretrained_model', type=str, default='bert-base-multilingual-cased', help='name of pretrained model to use')
-    arg_parser.add_argument('--epochs', type=int, default=10, help='training epochs')
-    arg_parser.add_argument('--learning_rate', type=float, default=5e-6, help='learning rate')
+    arg_parser.add_argument('--epochs', type=int, default=20, help='training epochs')
+    arg_parser.add_argument('--learning_rate', type=float, default=3e-5, help='learning rate')
     arg_parser.add_argument('--use_sampler', action='store_true', help='use sampler to solve imbalance problem')
-    arg_parser.add_argument('--ratio', type=float, help='use sampler to solve imbalance problem, \
+    arg_parser.add_argument('--ratio', type=float, default=2.0, help='use sampler to solve imbalance problem, \
             prob(answerable) / prob(unanswerable) what you enter')
-    arg_parser.add_argument('--round', type=int, default=1000, help='iter of each epoch using sampler')
-    arg_parser.add_argument('--kernel_size', type=int, default=3, help='kernel_size in conv model')
+    arg_parser.add_argument('--round', type=int, default=2000, help='iter of each epoch using sampler')
+    arg_parser.add_argument('--kernel_size', type=int, default=7, help='kernel_size in conv model')
     arg_parser.add_argument('--overlap_k', type=int, default=0, help='overlap in preprocess')
     arg_parser.add_argument('--batch_size', type=int, default=4)
     arg_parser.add_argument('--hw2_QA_bert', type=str, help='path of hw2_QA_bert')
