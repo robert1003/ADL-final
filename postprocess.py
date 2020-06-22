@@ -5,6 +5,7 @@ def get_index(index, tokens, target, tokenizer):
     st, ed, idx, cnt = -1, -1, 0, 0
     for i, tok in enumerate(tokens):
         if tok == '[SEP]':
+            idx = 0
             cnt += 1
             continue
         if target[idx] == tok:
@@ -16,8 +17,6 @@ def get_index(index, tokens, target, tokenizer):
             st, ed, idx = -1, -1, 0
         if idx >= len(target):
             break
-            
-    print(target, tokens[st:ed+1], index[cnt])
     assert st != -1 and ed != -1
     return index[cnt]
 
@@ -96,60 +95,6 @@ def post_process(
         null_score = ((start_logit[0] + end_logit[0]) * 0.5).detach().cpu().numpy()
         if len(possible) == 0 or null_score > null_threshold:
             continue
-
-        # might have two answers
-        if QAexample.question_text in special_list and len(possible) > 1:
-            if len(possible) > 1:
-                idxs = {*possible[0][1], *possible[1][1]}
-                if len(idxs) == 4:
-                    idxs = sorted(list(idxs))
-                    ans1 = tokenizer.decode(
-                        QAfeature.input_ids[idxs[0] + offset:idxs[1] + offset + 1], 
-                        skip_special_tokens=True
-                    ).replace(' ', '').replace('#', '')
-                    raw_ans1 = tokenizer.convert_ids_to_tokens(
-                        QAfeature.input_ids[idxs[0] + offset:idxs[1] + offset + 1], 
-                        skip_special_tokens=True
-                    )
-                    if ans1.find('[SEP]') != -1:
-                        print('truncating', ans1, file=sys.stderr)
-                        ans1 = ans1[:ans1.find('[SEP]')]
-                    ans2 = tokenizer.decode(
-                        QAfeature.input_ids[idxs[2] + offset:idxs[3] + offset + 1], 
-                        skip_special_tokens=True
-                    ).replace(' ', '').replace('#', '')
-                    raw_ans2 = tokenizer.convert_ids_to_tokens(
-                        QAfeature.input_ids[idxs[2] + offset:idxs[3] + offset + 1], 
-                        skip_special_tokens=True
-                    ).replace(' ', '').replace('#', '')
-                    if ans2.find('[SEP]') != -1:
-                        print('truncating', ans2, file=sys.stderr)
-                        ans1 = ans2[:ans2.find('[SEP]')]
-                    idx1 = get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans1, tokenizer)
-                    idx2 = get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans2, tokenizer)
-                    
-                    if idx1 == idx2:
-                        # special case for 質問箇所TEL/FAX
-                        if QAexample.question_text == '質問箇所TEL/FAX':
-                            if ans1.find('電話') != -1 and ans2.find('（）０') != -1:
-                                ans = ans1 + ';' + '（ＦＡＸ）' + ans2[2:]
-
-                        # special case for 仕様書交付期限, 入札書締切日時
-                        else:
-                            for name in era_name:
-                                if ans1.find(name) != -1 and is_datatime(ans2):
-                                    ans = ans1 + ';' + ans2
-                                    break
-                    
-                        if ans is not None:
-                            answer_tuples.append((
-                                QAexample.document_id,
-                                idx1,
-                                QAexample.question_text,
-                                ans
-                            ))
-                            continue
-
         # only one
         start_pos, end_pos = possible[0][1]
         raw_ans = tokenizer.convert_ids_to_tokens(
@@ -163,13 +108,14 @@ def post_process(
         from itertools import groupby
         raw_anss = [list(g) for k, g in groupby(raw_ans, lambda x: x == '[SEP]') if not k]
         anss = ans.split('[SEP]')
-        for ans in anss:
+        for ans, raw_ans in zip(anss, raw_anss):
+            ans = ans.replace('[PAD]', '')
+            if ans == '':
+                continue
             answer_tuples.append((
                 QAexample.document_id,
                 get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans, tokenizer),
                 QAexample.question_text,
-                ans.replace('[PAD]', '')
+                ans
             ))
     return answer_tuples
-
-
