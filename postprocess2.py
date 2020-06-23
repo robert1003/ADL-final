@@ -1,5 +1,5 @@
 import torch
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 
 def get_index(index, tokens, target, tokenizer):
     st, ed, idx, cnt = -1, -1, 0, 0
@@ -18,7 +18,33 @@ def get_index(index, tokens, target, tokenizer):
         if idx >= len(target):
             break
     assert st != -1 and ed != -1
-    return index[cnt]
+    return cnt, index[cnt]
+
+def get_real_answer(sent_idx, context_text, ans_text, tokenizer):
+    if '[UNK]' not in ans_text:
+        return ans_text
+    sent = context_text.split('[SEP]')[sent_idx]
+    parts = ans_text.split('[UNK]')
+    start = 0
+    while True:
+        if start >= len(sent) or start == -1:
+            raise Exception('Error')
+        sub_start = start
+        for part in parts:
+            sub_start = sent.find(part, sub_start)
+            end = sub_start + len(part)
+            sub_start = end
+        
+        recon = tokenizer.convert_tokens_to_string(
+            tokenizer.tokenize(sent[start:end])
+        ).replace(' ', '').replace('#', '').replace('▁', '')
+        
+        if recon == ans_text:
+            print(ans_text)
+            print(sent[start:end])
+            return sent[start:end]
+        else:
+            start += 1
 
 def is_datatime(time):
     # hr:mn or hr：mn
@@ -112,9 +138,11 @@ def post_process(
             ans = ans.replace('[PAD]', '')
             if ans == '':
                 continue
+            iidx, idx = get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans, tokenizer)
+            ans = get_real_answer(iidx, QAexample.context_text, ans, tokenizer)
             answer_tuples.append((
                 QAexample.document_id,
-                get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans, tokenizer),
+                idx,
                 QAexample.question_text,
                 ans
             ))
@@ -197,10 +225,9 @@ def post_process_blend(
             skip_special_tokens=False
         )
         ans = tokenizer.decode(
-                QAfeature.input_ids[start_pos + offset:end_pos + offset + 1], 
-                skip_special_tokens=False
-            ).replace(' ', '').replace('#', '')
-        anss = ans.split('[SEP]')
+            QAfeature.input_ids[start_pos + offset:end_pos + offset + 1], 
+            skip_special_tokens=False
+        ).replace(' ', '').replace('#', '').replace('▁', '')
         from itertools import groupby
         raw_anss = [list(g) for k, g in groupby(raw_ans, lambda x: x == '[SEP]') if not k]
         anss = ans.split('[SEP]')
@@ -208,12 +235,12 @@ def post_process_blend(
             ans = ans.replace('[PAD]', '')
             if ans == '':
                 continue
+            iidx, idx = get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans, tokenizer)
+            ans = get_real_answer(iidx, QAexample.context_text, ans, tokenizer)
             answer_tuples.append((
                 QAexample.document_id,
-                get_index(QAexample.index, tokenizer.tokenize(QAexample.context_text), raw_ans, tokenizer),
+                idx,
                 QAexample.question_text,
                 ans
             ))
     return answer_tuples
-
-
