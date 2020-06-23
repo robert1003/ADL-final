@@ -28,16 +28,33 @@ def get_real_answer(sent_idx, context_text, ans_text, tokenizer):
     start = 0
     while True:
         if start >= len(sent) or start == -1:
-            raise Exception('Error')
+            print(sent, ans_text, parts)
+            return ans_text
         sub_start = start
         for part in parts:
             sub_start = sent.find(part, sub_start)
             end = sub_start + len(part)
             sub_start = end
         
-        recon = tokenizer.convert_tokens_to_string(
-            tokenizer.tokenize(sent[start:end])
-        ).replace(' ', '').replace('#', '').replace('▁', '')
+        if parts[-1] == '':
+            recon = ''
+            end -= 1
+            while len(recon) < 5 or recon[-5:] != '[UNK]':
+                end += 1
+                recon = tokenizer.convert_tokens_to_string(
+                    tokenizer.tokenize(sent[start:end])
+                ).replace(' ', '').replace('#', '').replace('▁', '')
+            while end <= len(sent) and recon[-5:] == '[UNK]':
+                recon = tokenizer.convert_tokens_to_string(
+                    tokenizer.tokenize(sent[start:end])
+                ).replace(' ', '').replace('#', '').replace('▁', '')
+                end += 1
+            end -= 1
+
+        else:
+            recon = tokenizer.convert_tokens_to_string(
+                tokenizer.tokenize(sent[start:end])
+            ).replace(' ', '').replace('#', '').replace('▁', '')
         
         if recon == ans_text:
             print(ans_text)
