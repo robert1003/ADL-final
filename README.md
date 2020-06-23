@@ -19,4 +19,12 @@
 | linear_ltf0501 | ratio=3.0, | dev f1: 0.89568 | linear is not good | 
 | conv_retry | no_sampler, 20 epochs, lr=3e-5 | best loss: 0.19300 (**test f1: 0.93802**), best f1: 0.93791 (**test f1: 0.93386**) | improved preprocess |
 | conv_hw2_retry | ratio=2.0, round=2000, bert.pth | best loss: 0.17028, best f1: 0.94039(**test f1: 0.94991**) | improved preprocess with bert |
-| parent_sampler | ratio=2.0, round=2000, bert.pth, preprocess_parent | best loss: 0.05278, best f1:0.94723(**test f1: 0.95025**) | preprocess_parent better |
+| parent_sampler | ratio=2.0, round=2000, lr=3e-5, bert.pth, preprocess_parent | best loss: 0.05278, best f1:0.94723(**test f1: 0.95025**) | thres=0.3, preprocess_parent better, merge_5 |
+| parent_sampler_higher_ratio | ratio=6.0, lr=5e-6, ditto | best loss: 0.04124, best f1: 0.96454 | thres=0.4, merge_4 |
+| parent_sampler_longer | ratio=2.0, ditto | best loss: 0.03799, best f1: 0.96410 | thres=0.4, merge_4 |
+| parent_sampler_meow | ratio=4.0, ditto | best loss: 0.04119, best f1: 0.96370 | thres=0.6, merge_4 |
+| parent_sampler_ratio_8.0 | ratio=8.0, ditto | best loss: 0.04206, best f1: 0.96444 | thres=0.1, merge_4 |
+| blending/merge_4_dev.csv | merge_4, use postprocess & blend | f1: 0.96589 | merge with best f1 pth |
+| blending/merge_5_dev.csv | merge_5, ditto | f1: 0.96562 | merge with best f1 pth |
+| blending/merge2_4_dev.csv | merge_4, use postprocess2 & blend2 | f1: 0.96980(**merge2_4_test.csv test f1: 0.97654**) | merge with best f1 pth |
+| blending/merge2_5_dev.csv | merge_4 & 5, ditto | f1: 0.96931 | merge with best f1 pth |

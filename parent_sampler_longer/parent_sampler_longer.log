@@ -1,0 +1,124 @@
+Namespace(batch_size=4, cuda=1, dev_data='../release/dev', dev_ref_file='../release/dev/dev_ref.csv', epochs=50, hw2_QA_bert='../bert.pth', kernel_size=7, learning_rate=5e-06, log_name='parent_sampler_longer.log', merge_type=0, model_name='parent_sampler_longer.pth', overlap_k=0, pretrained_model='bert-base-multilingual-cased', ratio=2.0, round=2000, train='conv', train_data='../release/train', use_sampler=True)
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "directionality": "bidi",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "type_vocab_size": 2,
+  "vocab_size": 119547
+}
+
+loading file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-vocab.txt from cache at /home/robert1003/.cache/torch/transformers/96435fa287fbf7e469185f1062386e05a075cadbf6838b74da22bf64b080bc32.99bcd55fc66f4f3360bc49ba472b940b8dcf223ea6a345deb969d607ca900729
+loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-multilingual-cased-config.json from cache at /home/robert1003/.cache/torch/transformers/45629519f3117b89d89fd9c740073d8e4c1f0a70f9842476185100a8afe715d1.65df3cef028a0c91a7b059e4c404a975ebe6843c71267b67019c0e9cfa8a88f0
+Model config BertConfig {
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "directionality": "bidi",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "type_vocab_size": 2,
+  "vocab_size": 119547
+}
+
+loading weights file https://cdn.huggingface.co/bert-base-multilingual-cased-pytorch_model.bin from cache at /home/robert1003/.cache/torch/transformers/3d1d2b2daef1e2b3ddc2180ddaae8b7a37d5f279babce0068361f71cd548f615.7131dcb754361639a7d5526985f880879c9bfd144b65a0bf50590bddb7de9059
+Epoch 1/50: training loss = 0.29347, dev loss = 0.10789, dev f1 score = 0.92091, Time 13m 1s (- 638m 34s)
+Update best f1: 0.00000 -> 0.92091, thres 0.70, saving model to f1_parent_sampler_longer.pth
+Update best loss: 1000000000.00000 -> 0.10789, saving model to loss_parent_sampler_longer.pth
+Epoch 2/50: training loss = 0.09699, dev loss = 0.07506, dev f1 score = 0.94753, Time 26m 26s (- 634m 38s)
+Update best f1: 0.92091 -> 0.94753, thres 0.10, saving model to f1_parent_sampler_longer.pth
+Update best loss: 0.10789 -> 0.07506, saving model to loss_parent_sampler_longer.pth
+Epoch 3/50: training loss = 0.06894, dev loss = 0.04802, dev f1 score = 0.95606, Time 39m 44s (- 622m 41s)
+Update best f1: 0.94753 -> 0.95606, thres 0.20, saving model to f1_parent_sampler_longer.pth
+Update best loss: 0.07506 -> 0.04802, saving model to loss_parent_sampler_longer.pth
+Epoch 4/50: training loss = 0.05524, dev loss = 0.04946, dev f1 score = 0.94897, Time 52m 57s (- 609m 1s)
+Epoch 5/50: training loss = 0.06061, dev loss = 0.05467, dev f1 score = 0.95492, Time 65m 46s (- 591m 59s)
+Epoch 6/50: training loss = 0.04912, dev loss = 0.04877, dev f1 score = 0.95167, Time 79m 3s (- 579m 43s)
+Epoch 7/50: training loss = 0.04383, dev loss = 0.04922, dev f1 score = 0.95737, Time 91m 58s (- 565m 1s)
+Update best f1: 0.95606 -> 0.95737, thres 0.30, saving model to f1_parent_sampler_longer.pth
+Epoch 8/50: training loss = 0.04257, dev loss = 0.05369, dev f1 score = 0.95117, Time 104m 55s (- 550m 53s)
+Epoch 9/50: training loss = 0.04535, dev loss = 0.04853, dev f1 score = 0.95531, Time 117m 46s (- 536m 32s)
+Epoch 10/50: training loss = 0.03973, dev loss = 0.04205, dev f1 score = 0.95947, Time 130m 44s (- 522m 56s)
+Update best f1: 0.95737 -> 0.95947, thres 0.30, saving model to f1_parent_sampler_longer.pth
+Update best loss: 0.04802 -> 0.04205, saving model to loss_parent_sampler_longer.pth
+Epoch 11/50: training loss = 0.04850, dev loss = 0.03803, dev f1 score = 0.95818, Time 143m 51s (- 510m 2s)
+Update best loss: 0.04205 -> 0.03803, saving model to loss_parent_sampler_longer.pth
+Epoch 12/50: training loss = 0.04096, dev loss = 0.04020, dev f1 score = 0.95800, Time 156m 44s (- 496m 21s)
+Epoch 13/50: training loss = 0.03621, dev loss = 0.05002, dev f1 score = 0.95728, Time 169m 24s (- 482m 11s)
+Epoch 14/50: training loss = 0.03028, dev loss = 0.04638, dev f1 score = 0.95777, Time 182m 5s (- 468m 13s)
+Epoch 15/50: training loss = 0.03140, dev loss = 0.04029, dev f1 score = 0.96077, Time 194m 47s (- 454m 31s)
+Update best f1: 0.95947 -> 0.96077, thres 0.50, saving model to f1_parent_sampler_longer.pth
+Epoch 16/50: training loss = 0.03235, dev loss = 0.04668, dev f1 score = 0.96001, Time 207m 38s (- 441m 13s)
+Epoch 17/50: training loss = 0.02838, dev loss = 0.03979, dev f1 score = 0.95709, Time 220m 20s (- 427m 42s)
+Epoch 18/50: training loss = 0.02995, dev loss = 0.03964, dev f1 score = 0.96233, Time 232m 59s (- 414m 13s)
+Update best f1: 0.96077 -> 0.96233, thres 0.30, saving model to f1_parent_sampler_longer.pth
+Epoch 19/50: training loss = 0.02693, dev loss = 0.04195, dev f1 score = 0.96289, Time 245m 46s (- 401m 0s)
+Update best f1: 0.96233 -> 0.96289, thres 0.30, saving model to f1_parent_sampler_longer.pth
+Epoch 20/50: training loss = 0.03067, dev loss = 0.03815, dev f1 score = 0.96396, Time 258m 37s (- 387m 56s)
+Update best f1: 0.96289 -> 0.96396, thres 0.40, saving model to f1_parent_sampler_longer.pth
+Epoch 21/50: training loss = 0.02631, dev loss = 0.04486, dev f1 score = 0.96270, Time 271m 35s (- 375m 2s)
+Epoch 22/50: training loss = 0.03074, dev loss = 0.04005, dev f1 score = 0.96094, Time 284m 25s (- 362m 0s)
+Epoch 23/50: training loss = 0.02959, dev loss = 0.04120, dev f1 score = 0.96030, Time 297m 7s (- 348m 47s)
+Epoch 24/50: training loss = 0.02111, dev loss = 0.04267, dev f1 score = 0.96374, Time 309m 49s (- 335m 38s)
+Epoch 25/50: training loss = 0.02702, dev loss = 0.03799, dev f1 score = 0.96410, Time 323m 2s (- 323m 2s)
+Update best f1: 0.96396 -> 0.96410, thres 0.40, saving model to f1_parent_sampler_longer.pth
+Update best loss: 0.03803 -> 0.03799, saving model to loss_parent_sampler_longer.pth
+Epoch 26/50: training loss = 0.02418, dev loss = 0.04255, dev f1 score = 0.96152, Time 336m 31s (- 310m 37s)
+Epoch 27/50: training loss = 0.02856, dev loss = 0.03839, dev f1 score = 0.96254, Time 349m 44s (- 297m 55s)
+Epoch 28/50: training loss = 0.02851, dev loss = 0.03866, dev f1 score = 0.95989, Time 362m 56s (- 285m 9s)
+Epoch 29/50: training loss = 0.02111, dev loss = 0.04056, dev f1 score = 0.96194, Time 376m 3s (- 272m 18s)
+Epoch 30/50: training loss = 0.02867, dev loss = 0.04464, dev f1 score = 0.95927, Time 388m 50s (- 259m 13s)
+Epoch 31/50: training loss = 0.02259, dev loss = 0.04186, dev f1 score = 0.95982, Time 402m 4s (- 246m 25s)
+Epoch 32/50: training loss = 0.02177, dev loss = 0.04532, dev f1 score = 0.96038, Time 415m 18s (- 233m 36s)
+Epoch 33/50: training loss = 0.02334, dev loss = 0.04471, dev f1 score = 0.96242, Time 428m 17s (- 220m 37s)
+Epoch 34/50: training loss = 0.02154, dev loss = 0.04358, dev f1 score = 0.95955, Time 441m 2s (- 207m 32s)
+Epoch 35/50: training loss = 0.02430, dev loss = 0.04553, dev f1 score = 0.96067, Time 456m 3s (- 195m 27s)
+Epoch 36/50: training loss = 0.02186, dev loss = 0.04555, dev f1 score = 0.96299, Time 468m 44s (- 182m 17s)
+Epoch 37/50: training loss = 0.02537, dev loss = 0.04646, dev f1 score = 0.96293, Time 481m 24s (- 169m 8s)
+Epoch 38/50: training loss = 0.01742, dev loss = 0.05193, dev f1 score = 0.96232, Time 494m 7s (- 156m 2s)
+Epoch 39/50: training loss = 0.02307, dev loss = 0.04648, dev f1 score = 0.95788, Time 506m 52s (- 142m 57s)
+Epoch 40/50: training loss = 0.01808, dev loss = 0.05043, dev f1 score = 0.96220, Time 519m 37s (- 129m 54s)
+Epoch 41/50: training loss = 0.02097, dev loss = 0.04827, dev f1 score = 0.96342, Time 532m 22s (- 116m 51s)
+Epoch 42/50: training loss = 0.02106, dev loss = 0.04620, dev f1 score = 0.95843, Time 545m 7s (- 103m 50s)
+Epoch 43/50: training loss = 0.02275, dev loss = 0.04381, dev f1 score = 0.95966, Time 557m 51s (- 90m 48s)
+Epoch 44/50: training loss = 0.02058, dev loss = 0.04922, dev f1 score = 0.96093, Time 570m 37s (- 77m 48s)
+Epoch 45/50: training loss = 0.01925, dev loss = 0.04534, dev f1 score = 0.96072, Time 583m 22s (- 64m 49s)
+Epoch 46/50: training loss = 0.02124, dev loss = 0.04714, dev f1 score = 0.96087, Time 596m 8s (- 51m 50s)
+Epoch 47/50: training loss = 0.02284, dev loss = 0.04611, dev f1 score = 0.96304, Time 608m 51s (- 38m 51s)
+Epoch 48/50: training loss = 0.01704, dev loss = 0.05085, dev f1 score = 0.96134, Time 621m 37s (- 25m 54s)
+Epoch 49/50: training loss = 0.02382, dev loss = 0.04096, dev f1 score = 0.96357, Time 634m 22s (- 12m 56s)
+Epoch 50/50: training loss = 0.01719, dev loss = 0.04814, dev f1 score = 0.96100, Time 647m 5s (- 0m 0s)
+Best dev f1: 0.96410 Best dev loss: 0.03799
