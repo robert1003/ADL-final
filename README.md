@@ -32,3 +32,6 @@
 | parent_pad_4.0 | ratio=4.0, trash | best loss: 0.04852, best f1: 0.96717 | |
 | parent_pad_6.0 | ratio=6.0, trash | best loss: 0.05564, best f1: 0.96866 | |
 | blending/merge2_6_dev_upd_postprocess.csv | merge2_6 | f1: 0.97194 | merge_4 with 2 trash |
+| blending/merge2_2_dev_upd_postprocess.csv | merge2_2 | f1: 0.9422 | merge 2 trash |
+| blending/merge2_8_dev_f1_loss_upd_postprocess.csv | merge2_8 | f1: 0.97294 | merge 4 f1 & loss |
+| blending/merge2_4_dev_loss_upd_postprocess | merge2_4 | f1: 0.97423(**test f1:**) | merge 4 loss |
