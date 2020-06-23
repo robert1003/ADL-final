@@ -28,4 +28,7 @@
 | blending/merge_5_dev.csv | merge_5, ditto | f1: 0.96562 | merge with best f1 pth |
 | blending/merge2_4_dev.csv | merge_4, use postprocess2 & blend2 | f1: 0.96980(**merge2_4_test.csv test f1: 0.97654**) | merge with best f1 pth |
 | blending/merge2_5_dev.csv | merge_4 & 5, ditto | f1: 0.96931 | merge with best f1 pth |
-| blending/merge2_4_dev_upd_postprocess.csv | merge_4, p2 & b2, fix UNK | f1: 0.97285(**test f1: ??**) | |
+| blending/merge2_4_dev_upd_postprocess.csv | merge_4, p2 & b2, fix UNK | f1: 0.97285(**test f1: 0.98143**) | |
+| parent_pad_4.0 | ratio=4.0, trash | best loss: 0.04852, best f1: 0.96717 | |
+| parent_pad_6.0 | ratio=6.0, trash | best loss: 0.05564, best f1: 0.96866 | |
+| blending/merge2_6_dev_upd_postprocess.csv | merge2_6 | f1: 0.97194 | merge_4 with 2 trash |
