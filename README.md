@@ -28,3 +28,4 @@
 | blending/merge_5_dev.csv | merge_5, ditto | f1: 0.96562 | merge with best f1 pth |
 | blending/merge2_4_dev.csv | merge_4, use postprocess2 & blend2 | f1: 0.96980(**merge2_4_test.csv test f1: 0.97654**) | merge with best f1 pth |
 | blending/merge2_5_dev.csv | merge_4 & 5, ditto | f1: 0.96931 | merge with best f1 pth |
+| blending/merge2_4_dev_upd_postprocess.csv | merge_4, p2 & b2, fix UNK | f1: 0.97285(**test f1: ??**) | |
