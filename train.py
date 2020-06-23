@@ -5,7 +5,7 @@ import torch
 import time
 from _utils import timeSince, gen_name, score
 from output import Output
-from postprocess import post_process
+from postprocess2 import post_process
 
 def Train(model, train_dataloader, dev_dataloader, dev_index_list, QAExamples, QAFeatures, tokenizer,
         criterion, optimizer, device, model_file, dev_ref_file, epochs=10):
