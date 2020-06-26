@@ -2,7 +2,13 @@
 
 ## Training
 
-### Train Bert on DRCD dataset (from 2020 ADL hw2)
+### Train Bert on DRCDv2 dataset (from 2020 ADL hw2)
+
+First, prepare DRCDv2 dataset (the data used in ADL hw2). You can choose to download it [here](140.112.90.200:data.zip). Then, execute the following command:
+```
+python3.6 hw2/train.py [train_data_path]
+```
+The BERT model is stored at `hw2/bert.pth`.
 
 ### Train the four models used in our final prediction
 
