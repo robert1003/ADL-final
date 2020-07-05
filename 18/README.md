@@ -4,7 +4,7 @@
 
 ### Train Bert on DRCDv2 dataset (from 2020 ADL hw2)
 
-First, prepare DRCDv2 dataset (the data used in ADL hw2). You can choose to download it [here](140.112.90.200:data.zip). Then, execute the following command:
+First, prepare DRCDv2 dataset (the data used in ADL hw2). You can choose to download it [here](140.112.90.200:18679/data.zip). Then, execute the following command:
 ```
 python3.6 hw2/train.py [train_data_path]
 ```

@@ -1,4 +1,4 @@
-cl6=140.112.90.200:18678
+cl6=140.112.90.200:18679
 
 wget $cl6/loss_parent_sampler_higher_ratio.pth || gdown --id 1Lg8xm4b79F0DwKY4n8FAmHuSHUa9KJ5I
 wget $cl6/loss_parent_sampler_longer.pth || gdown --id 1_ElloUGTiNcye97FZY5pHv8-MhpXhCUf
