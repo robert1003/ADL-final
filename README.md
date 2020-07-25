@@ -1,37 +1,49 @@
+# ADL Final Project - Shared Task Challenge
 
-| folder | important hyper | info | comment |
-| - | - | - | - |
-| conv_robert_1 | kernel_size=5 | conv_dev.csv: 0.9218325073071548 | |
-| conv_robert_2 | kernel_size=7 | conv_dev.csv: 0.9276401067479988, 30_conv_dev.csv: 0.9281865548354303 | larger kernel_size seems to work better, and pocket with CE loss is not good |
-| conv_robert_11 | kernel_size=9 | conv_dev.csv: 0.9294573643410853 | |
-| conv_robert_12 | kernel_size=11 | conv_dev.csv: 0.9289236243487101 | |
-| conv_sampler_robert_7 | ratio=1.0 round=2000 | conv_sampler_dev.csv: 0.929838607192782 | |
-| conv_sampler_robert_8 | ratio=2.0 round=2000 | conv_sampler_dev.csv: 0.9331681280975983 | |
-| conv_sampler_robert_5 | ratio=3.0 round=2000 | conv_sampler_dev.csv: 0.9312364976490027 | |
-| conv_sampler_robert_6 | ratio=4.0 round=2000 | conv_sampler_dev.csv: 0.9323929342991488 | | 
-| conv_sampler_robert_4 | ratio=5.0 round=2000 | conv_sampler_dev.csv: 0.9320116914474523 | different ratios didn't have much difference except ratio=1.0. this might implies that we may not need sampler and model probably will not suffer from imbalanced data |
-| conv_from_hw2_9 | bert=hw2(trained 10 epochs) ks=7 | conv_hw2_dev.csv: 0.9314398271699075, **conv_hw2_test.csv(pub): 0.93523** | loss decreases faster(dev_loss 0.21~ in 1200 steps |
-| conv2_robert_3 | Conv1d: 768-786-1, relu | conv2_dev.csv: 0.9210700216037618, 30_conv2_dev.csv: 0.9288727919684839 | deeper conv layer didn't improve, and pocket with CE loss is not good |
-| conv2_robert_13 | Conv1d: 786-30-1, relu | conv2_dev.csv: 0.9312401285333047 | |
-| conv_distilbert_robert_15 | bert=distilbert-base-multilingual-cased | conv_dis_dev.csv: 0.9303977633752702 | | 
-| conv_ltf0501 | kernel_size=7, ratio=3.0 | dev f1: 0.92911 | transfer learning from hw2 |
-| conv_deep_ltf0501 | kernel_size=7, ratio=3.0, | dev f1: 0.92379 | transfer learning from hw2, CNN: 256 -> 64 -> 1 | 
-| linear_ltf0501 | ratio=3.0, | dev f1: 0.89568 | linear is not good | 
-| conv_retry | no_sampler, 20 epochs, lr=3e-5 | best loss: 0.19300 (**test f1: 0.93802**), best f1: 0.93791 (**test f1: 0.93386**) | improved preprocess |
-| conv_hw2_retry | ratio=2.0, round=2000, bert.pth | best loss: 0.17028, best f1: 0.94039(**test f1: 0.94991**) | improved preprocess with bert |
-| parent_sampler | ratio=2.0, round=2000, lr=3e-5, bert.pth, preprocess_parent | best loss: 0.05278, best f1:0.94723(**test f1: 0.95025**) | thres=0.3, preprocess_parent better, merge_5 |
-| parent_sampler_higher_ratio | ratio=6.0, lr=5e-6, ditto | best loss: 0.04124, best f1: 0.96454 | thres=0.4, merge_4 |
-| parent_sampler_longer | ratio=2.0, ditto | best loss: 0.03799, best f1: 0.96410 | thres=0.4, merge_4 |
-| parent_sampler_meow | ratio=4.0, ditto | best loss: 0.04119, best f1: 0.96370 | thres=0.6, merge_4 |
-| parent_sampler_ratio_8.0 | ratio=8.0, ditto | best loss: 0.04206, best f1: 0.96444 | thres=0.1, merge_4 |
-| blending/merge_4_dev.csv | merge_4, use postprocess & blend | f1: 0.96589 | merge with best f1 pth |
-| blending/merge_5_dev.csv | merge_5, ditto | f1: 0.96562 | merge with best f1 pth |
-| blending/merge2_4_dev.csv | merge_4, use postprocess2 & blend2 | f1: 0.96980(**merge2_4_test.csv test f1: 0.97654**) | merge with best f1 pth |
-| blending/merge2_5_dev.csv | merge_4 & 5, ditto | f1: 0.96931 | merge with best f1 pth |
-| blending/merge2_4_dev_upd_postprocess.csv | merge_4, p2 & b2, fix UNK | f1: 0.97285(**test f1: 0.98143**) | |
-| parent_pad_4.0 | ratio=4.0, trash | best loss: 0.04852, best f1: 0.96717 | |
-| parent_pad_6.0 | ratio=6.0, trash | best loss: 0.05564, best f1: 0.96866 | |
-| blending/merge2_6_dev_upd_postprocess.csv | merge2_6 | f1: 0.97194 | merge_4 with 2 trash |
-| blending/merge2_2_dev_upd_postprocess.csv | merge2_2 | f1: 0.9422 | merge 2 trash |
-| blending/merge2_8_dev_f1_loss_upd_postprocess.csv | merge2_8 | f1: 0.97294 | merge 4 f1 & loss |
-| blending/merge2_4_dev_loss_upd_postprocess | merge2_4 | f1: 0.97423(**test f1:**) | merge 4 loss |
+## Project detail
+
+* [Link](https://docs.google.com/presentation/d/1KYhOBy_xWjDR3iMWeB0GMMoVvRm-w0ygURxE5qnlPpc/edit#slide=id.p) to project slide.
+* [Link](https://drive.google.com/file/d/13vOp9SWnpVd-wlx3arKLBeBb_tCF7h8P/view?usp=sharing) to dataset.
+* [Link](https://www.kaggle.com/c/adl-final-project-shared-task-108-spring/leaderboard) to Kaggle competition website.
+
+## Our performance
+
+Ranked 1 in private dataset with score 0.97904
+
+## Execution detail
+
+### Training
+
+#### Train Bert on DRCDv2 dataset (from 2020 ADL hw2)
+
+First, prepare DRCDv2 dataset (the data used in ADL hw2). You can choose to download it [here](140.112.90.200:18679/data.zip). Then, execute the following command:
+```
+python3.6 hw2/train.py [train_data_path]
+```
+The BERT model is stored at `hw2/bert.pth`.
+
+#### Train the four models used in our final prediction
+
+Train 4 models:
+```
+cd parent_sampler_longer
+bash run.sh conv [cuda_num] parent_sampler_longer --train_data [train_data path] --dev_data [dev_data path] --dev_ref_file [dev_ref.csv file path] --epochs 30 --hw2_QA_bert [bert from above training] --kernel_size 7 --learning_rate 5e-6 --round 2000 --ratio 2.0
+```
+```
+cd parent_sampler_meow
+bash run.sh conv [cuda_num] parent_sampler_meow --train_data [train_data path] --dev_data [dev_data path] --dev_ref_file [dev_ref.csv file path] --epochs 30 --hw2_QA_bert [bert from above training] --kernel_size 7 --learning_rate 5e-6 --round 2000 --ratio 4.0
+```
+```
+cd parent_sampler_higher_ratio
+bash run.sh conv [cuda_num] parent_sampler_higher_ratio --train_data [train_data path] --dev_data [dev_data path] --dev_ref_file [dev_ref.csv file path] --epochs 30 --hw2_QA_bert [bert from above training] --kernel_size 7 --learning_rate 5e-6 --round 2000 --ratio 6.0
+```
+```
+cd parent_sampler_ratio_8.0
+bash run.sh conv [cuda_num] parent_sampler_ratio_8.0 --train_data [train_data path] --dev_data [dev_data path] --dev_ref_file [dev_ref.csv file path] --epochs 30 --hw2_QA_bert [bert from above training] --kernel_size 7 --learning_rate 5e-6 --round 2000 --ratio 8.0
+```
+
+After training, check the log for best null threshold for prediction (each model has its unique best null threshold)
+
+### Testing
+
+Change `null_threshold` in line 15 `test.py` (null threshold part) to the corresponding best null threshold for each models. Then, execute `python3 test.py [test file path]`.
