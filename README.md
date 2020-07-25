@@ -16,7 +16,7 @@ Ranked 1 in private dataset with score 0.97904
 
 #### Train Bert on DRCDv2 dataset (from 2020 ADL hw2)
 
-First, prepare DRCDv2 dataset (the data used in ADL hw2). You can choose to download it [here](140.112.90.200:18679/data.zip). Then, execute the following command:
+First, prepare DRCDv2 dataset (the data used in ADL hw2). You can choose to download it [here](https://drive.google.com/drive/folders/1HTdj80dj3zFFJliv1EBoHgX-IEeP_4pQ?usp=sharing). Then, execute the following command:
 ```
 python3.6 hw2/train.py [train_data_path]
 ```
