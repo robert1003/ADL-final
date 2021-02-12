@@ -1,4 +1,6 @@
-# ADL Final Project - Shared Task Challenge
+# Document Information Extraction 
+
+This project is the final project of course ADL (Applied Deep Learning). My and my teammates constructed machine learning model(use BERT as a part) which extract set of tags from a Japanese bidding document, trained only on a little amount of dataset(about a hundred), and won the contest with a large gap.
 
 ## Project detail
 
